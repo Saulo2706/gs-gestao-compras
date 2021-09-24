@@ -1,14 +1,32 @@
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import Head from 'next/head'
+import api from '../services/api';
 
 export default function SignUp() {
     const { register, handleSubmit } = useForm();
 
     function handleSignUp(data) {
-        console.log(data)
-    }
+        const user = {
+            firstName: data.firstname,
+            lastName: data.lastname,
+            email: data.email,
+            birthday: data.birthday + "T03:00:00Z",
+            gender: data.gender,
+            password: data.password
+        };
+        api.post('auth/signup', user).then(
+            res => {
+                console.log(res);
+                console.log(res.status);
+            }
+        ).catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        });
 
+    }
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <Head>
@@ -57,7 +75,7 @@ export default function SignUp() {
                             />
                         </div>
                         <div className="flex flex-col mt-4">
-                            <label>Sobrenome:</label>
+                            <label>Data de Nascimento:</label>
                             <input
                                 {...register('birthday')}
                                 type="date"

@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import Head from 'next/head'
-import React from 'react'
+import React, { useContext } from 'react'
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 
 export default function signIn() {
     const { register, handleSubmit } = useForm();
 
+
     function handleSignIn(data){
-        console.log(data)
+
     }
 
     return (
