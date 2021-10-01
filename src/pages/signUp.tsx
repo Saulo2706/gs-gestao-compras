@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
+import { validateResponse } from "../functions/validateResponse";
+import { showNotify } from "../functions/showNotify";
 import Head from 'next/head'
 import api from '../services/api';
 
@@ -7,25 +9,36 @@ export default function SignUp() {
     const { register, handleSubmit } = useForm();
 
     function handleSignUp(data) {
-        const user = {
-            firstName: data.firstname,
-            lastName: data.lastname,
-            email: data.email,
-            birthday: data.birthday + "T03:00:00Z",
-            gender: data.gender,
-            password: data.password
-        };
-        api.post('auth/signup', user).then(
-            res => {
-                console.log(res);
-                console.log(res.status);
-            }
-        ).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data);
-            }
-        });
-
+        console.log(data)
+        if(data.email != data.re_email){
+            showNotify("Erro", "Emails não conferem!" , "danger")
+        }else if(data.password != data.re_password){
+            showNotify("Erro", "Senhas não conferem!" , "danger")
+        }else if(data.password.length < 8){
+            showNotify("Erro", "Senha não atinge os criterios minimos!" , "danger")
+        }else{
+            const user = {
+                firstName: data.firstname,
+                lastName: data.lastname,
+                email: data.email,
+                birthday: data.birthday + "T03:00:00Z",
+                gender: data.gender,
+                password: data.password
+            };
+            api.post('auth/signup', user, {withCredentials: true}).then(
+                res => {
+                    if(res.status == 200){
+                      showNotify("Sucesso", "Cadastro realizado com sucesso :)", "success")
+                    }else{
+                        showNotify("Alerta", res.data.message +" Codigo: " + res.status , "warning")
+                    }
+                }
+            ).catch((error) => {
+                if (error.response) {
+                    validateResponse(error.response.data.message)
+                }
+            });
+        }
     }
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -130,6 +143,24 @@ export default function SignUp() {
                             />
                         </div>
                         <div className="flex flex-col mt-4">
+                            <label>Confirmação de Email:</label>
+                            <input
+                                {...register('re_email')}
+                                type="email"
+                                required
+                                placeholder="Confirmação de Email"
+                                id="re_email"
+                                name="re_email"
+                                autoComplete="email"
+                                className={`
+                                px-4 py-3 rounded-lg bg-gray-200 mt-2 
+                                border focus:border-blue-500 focus:bg-white
+                                focus:outline-none
+                            `}
+                            />
+                        </div>
+                        
+                        <div className="flex flex-col mt-4">
                             <label>Senha:</label>
                             <input
                                 {...register('password')}
@@ -138,6 +169,23 @@ export default function SignUp() {
                                 placeholder="Senha"
                                 id="password"
                                 name="password"
+                                autoComplete="password"
+                                className={`
+                                px-4 py-3 rounded-lg bg-gray-200 mt-2 
+                                border focus:border-blue-500 focus:bg-white
+                                focus:outline-none
+                            `}
+                            />
+                        </div>
+                        <div className="flex flex-col mt-4">
+                            <label>Confirmação de Senha:</label>
+                            <input
+                                {...register('re_password')}
+                                type="password"
+                                required
+                                placeholder="Confirmação de Senha"
+                                id="re_password"
+                                name="re_password"
                                 autoComplete="password"
                                 className={`
                                 px-4 py-3 rounded-lg bg-gray-200 mt-2 
