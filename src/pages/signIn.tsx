@@ -1,37 +1,24 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import Head from 'next/head'
-import React, { useContext } from 'react'
-import { validateResponse } from "../functions/validateResponse";
 import { showNotify } from "../functions/showNotify";
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
-import api from '../services/api';
+import { useContext } from 'react';
+import { AuthContext } from '../data/context/AuthContext';
 
 export default function signIn() {
     const { register, handleSubmit } = useForm();
+    const {signIn} = useContext(AuthContext)
 
-    function handleSignIn(data) {
-        
+    async function handleSignIn(data) {
         const user = {
             email: data.email,
             password: data.password
         };
-        if(user.password.length >= 8){
-            api.post('auth/signin', user, { withCredentials: true }).then(
-                res => {
-                    if(res.status == 200){
-                        showNotify("Sucesso", "Login realizado com sucesso :)", "success")
-                      }else{
-                        showNotify("Alerta", res.data.message +" Codigo: " + res.status , "warning")
-                      }
-                }
-            ).catch((error) => {
-                if (error.response) {
-                    validateResponse(error.response.data.message)
-                }
-            });
-        }else{
-            showNotify("Alerta", "Senha invalida!" , "warning")
+        if (user.password.length >= 8) {
+            await signIn(data)
+        } else {
+            showNotify("Alerta", "Senha invalida!", "warning")
         }
     }
 
