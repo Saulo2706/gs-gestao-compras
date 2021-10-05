@@ -1,26 +1,22 @@
-import MenuLateral from "./MenuLateral";
 import NavBar from "./NavBar";
-import Conteudo from "./Conteudo";
+import Content from "./Content";
 import useAppData from "../../data/hook/useAppData";
 
 interface LayoutProps{
-    titulo: string
-    subtitulo: string
     children?: any
 }
 export default function Layout(props: LayoutProps){
-    const {tema} = useAppData()
+    const {theme} = useAppData()
     return(
-        <div className={`${tema} flex h-screen w-screen`}>
-            <MenuLateral/>
+        <div className={`${theme} flex h-screen w-screen`}>
             <div className={`
-                flex flex-col w-full p-7 
+                flex flex-col w-full 
                 bg-gray-300 dark:bg-gray-800
             `}>
-                <NavBar titulo={props.titulo} subtitulo={props.subtitulo}/>
-                <Conteudo>
+                <NavBar/>
+                <Content>
                     {props.children}
-                </Conteudo>
+                </Content>
             </div>
         </div>
     )

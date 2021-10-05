@@ -17,6 +17,8 @@ export function validateResponse(message){
         showNotify("Erro", "Email ou Senha inválidos", "danger")
     }else if(message == "NON_HANDLED_ERROR"){
         showNotify("Erro", "Essa não! Erro desconhecido!", "danger")
+    }else{
+        showNotify("Erro", "Erro não identificado!", "danger")
     }
 
 }
