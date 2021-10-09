@@ -1,15 +1,15 @@
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
-import { validateResponse } from "../functions/validateResponse";
 import { showNotify } from "../functions/showNotify";
 import Head from 'next/head'
-import api from '../services/api';
+import { useContext } from 'react';
+import { AuthContext } from '../data/context/AuthContext';
 
 export default function SignUp() {
     const { register, handleSubmit } = useForm();
-
-    function handleSignUp(data) {
-        console.log(data)
+    const {signUp} = useContext(AuthContext)
+    
+    async function handleSignUp(data) {
         if(data.email != data.re_email){
             showNotify("Erro", "Emails não conferem!" , "danger")
         }else if(data.password != data.re_password){
@@ -25,19 +25,7 @@ export default function SignUp() {
                 gender: data.gender,
                 password: data.password
             };
-            api.post('auth/signup', user, {withCredentials: true}).then(
-                res => {
-                    if(res.status == 200){
-                      showNotify("Sucesso", "Cadastro realizado com sucesso :)", "success")
-                    }else{
-                        showNotify("Alerta", res.data.message +" Codigo: " + res.status , "warning")
-                    }
-                }
-            ).catch((error) => {
-                if (error.response) {
-                    validateResponse(error.response.data.message)
-                }
-            });
+            await signUp(user)
         }
     }
     return (

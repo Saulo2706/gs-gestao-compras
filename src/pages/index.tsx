@@ -8,7 +8,9 @@ export default function Home() {
   return (
     <>
       <Layout>
-        <h1>TESTE + {user?.firstName}</h1>
+        <h1>FirstName: {user?.firstName}</h1>
+        <h1>Email: {user?.email}</h1>
+        
         
       </Layout>
     </>
