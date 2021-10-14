@@ -3,11 +3,11 @@ export default function Logo(){
     return(
         <div className={`
             flex flex-col justify-center items-center
-            h-14 w-14 rounded-full
-            bg-blue-500
+            h-10 w-10 rounded-full
+            bg-blue-300
         `}>
             <div>
-                <Image src="/img/logo.png" alt="Logo" width="40px" height="40px"/>
+                <Image src="/img/logo.png" alt="Logo" width="30px" height="30px"/>
             </div>
         </div>
     )

@@ -1,18 +1,14 @@
-import { useContext } from "react";
+import Head from 'next/head'
 import Layout from "../components/template/Layout";
-import { AuthContext } from "../data/context/AuthContext";
 
-export default function Home() {
-  const { user } = useContext(AuthContext)
+export default function Index() {
 
+  <Head>
+    <title>Index</title>
+  </Head>
   return (
     <>
-      <Layout>
-        <h1>FirstName: {user?.firstName}</h1>
-        <h1>Email: {user?.email}</h1>
-        
-        
-      </Layout>
+      <h1>INDEX</h1>
     </>
   )
 }

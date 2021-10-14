@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import api from '../../services/api';
 import { validateResponse } from "../../functions/validateResponse";
-import { showNotify } from "../../functions/showNotify";
 import Router from "next/router";
 
 
@@ -37,22 +36,22 @@ export function AuthProvider({ children }) {
     const isAuthenticated = !!user;
 
     useEffect(() => {
-        
+
         async function loadUser() {
             try {
                 const { data: user } = await api.get('api/profile', { withCredentials: true })
                 if (user) setUser(user);
-                if(Router.pathname == '/signIn' || Router.pathname == '/signUp'){
-                    Router.push('/');
+                if (Router.pathname == '/signIn' || Router.pathname == '/signUp') {
+                    Router.push('/main/');
                 }
             } catch (error) {
-                if(Router.pathname != '/signIn' && Router.pathname != '/signUp'){
+                if (Router.pathname != '/signIn' && Router.pathname != '/signUp') {
                     Router.push('/signIn');
                 }
                 console.log(error.response)
             }
         }
-        
+
         loadUser()
 
     }, [])
@@ -61,7 +60,7 @@ export function AuthProvider({ children }) {
         try {
             const { data: user } = await api.post('auth/signin', { email, password }, { withCredentials: true })
             setUser(user)
-            Router.push('/');
+            Router.push('/main/');
         } catch (error) {
             console.log(error)
             console.log(error.response)
@@ -71,9 +70,9 @@ export function AuthProvider({ children }) {
         }
     }
 
-    async function signUp({ firstName,lastName,email,birthday,gender, password }: SignUpData) {
+    async function signUp({ firstName, lastName, email, birthday, gender, password }: SignUpData) {
         try {
-            const { data: user } = await api.post('auth/signup', { firstName,lastName,email,birthday,gender, password }, { withCredentials: true })
+            const { data: user } = await api.post('auth/signup', { firstName, lastName, email, birthday, gender, password }, { withCredentials: true })
             setUser(user)
             Router.push('/');
         } catch (error) {

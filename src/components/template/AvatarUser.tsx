@@ -17,13 +17,13 @@ export default function AvatarUser(props: AvatarUserProps) {
             </div>
             <ul tabIndex={0} className="p-2 shadow menu dropdown-content bg-gray-100 text-gray-700 rounded-box w-52 mt-1">
                 <li className="hover:bg-gray-200 rounded-box">
-                    <a>Item 1</a>
+                    <a href="/main/user">Meus Dados</a>
                 </li>
                 <li className="hover:bg-gray-200 rounded-box">
-                    <a>Item 2</a>
+                    <a href="/main/company">Dados da Empresa</a>
                 </li>
                 <li className="hover:bg-gray-200 rounded-box">
-                    <a>Item 3</a>
+                    <a>Sair</a>
                 </li>
             </ul>
         </div>

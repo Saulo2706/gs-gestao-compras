@@ -7,16 +7,16 @@ import { AuthContext } from '../data/context/AuthContext';
 
 export default function SignUp() {
     const { register, handleSubmit } = useForm();
-    const {signUp} = useContext(AuthContext)
-    
+    const { signUp } = useContext(AuthContext)
+
     async function handleSignUp(data) {
-        if(data.email != data.re_email){
-            showNotify("Erro", "Emails não conferem!" , "danger")
-        }else if(data.password != data.re_password){
-            showNotify("Erro", "Senhas não conferem!" , "danger")
-        }else if(data.password.length < 8){
-            showNotify("Erro", "Senha não atinge os criterios minimos!" , "danger")
-        }else{
+        if (data.email != data.re_email) {
+            showNotify("Erro", "Emails não conferem!", "danger")
+        } else if (data.password != data.re_password) {
+            showNotify("Erro", "Senhas não conferem!", "danger")
+        } else if (data.password.length < 8) {
+            showNotify("Erro", "Senha não atinge os criterios minimos!", "danger")
+        } else {
             const user = {
                 firstName: data.firstname,
                 lastName: data.lastname,
@@ -147,7 +147,7 @@ export default function SignUp() {
                             `}
                             />
                         </div>
-                        
+
                         <div className="flex flex-col mt-4">
                             <label>Senha:</label>
                             <input
