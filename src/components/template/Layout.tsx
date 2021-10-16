@@ -15,13 +15,11 @@ export default function Layout(props: LayoutProps) {
                 bg-gray-300 dark:bg-gray-600
                 `}>
                 <NavBar />
-                <div className={`flex flex-row h-screen w-screen`}>
+                <div className={`flex h-screen`}>
                     <SideBar />
-                    <div className={`ml-5`}>
-                        <Content>
-                            {props.children}
-                        </Content>
-                    </div>
+                    <Content>
+                        {props.children}
+                    </Content>
                 </div>
             </div>
 

@@ -52,7 +52,7 @@ export function AuthProvider({ children }) {
             }
         }
 
-        loadUser()
+        //loadUser()
 
     }, [])
 
@@ -66,6 +66,8 @@ export function AuthProvider({ children }) {
             console.log(error.response)
             if (error.response) {
                 validateResponse(error.response.data.message)
+            }else{
+                validateResponse("erro não identifiado")
             }
         }
     }
@@ -80,6 +82,8 @@ export function AuthProvider({ children }) {
             console.log(error.response)
             if (error.response) {
                 validateResponse(error.response.data.message)
+            }else{
+                validateResponse("erro não identifiado")
             }
         }
     }

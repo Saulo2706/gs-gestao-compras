@@ -1,4 +1,4 @@
-import { IconAdjustments, IconBell, IconBrief, IconCompany, IconHome, IconLogout, IconQuestion, IconShopping, IconTag } from "../icons";
+import NavItem from "./NavItem";
 
 export default function SideBar() {
     return (
@@ -8,10 +8,22 @@ export default function SideBar() {
                 <label htmlFor="my-drawer" className="drawer-overlay"></label>
                 <ul className="flex-grow menu p-4 bg-base-100">
                     <li>
-                        <a>Menu Item</a>
+                        <NavItem href="/main" texto="Inicio" />
                     </li>
                     <li>
-                        <a>Menu Item</a>
+                        <NavItem href="/main/purchases" texto="Compras" />
+                    </li>
+                    <li>
+                        <NavItem href="/main/sales" texto="Vendas" />
+                    </li>
+                    <li>
+                        <NavItem href="/main/companyProviderRegister" texto="Cadastro de empresa - Fornecedor" />
+                    </li>
+                    <li>
+                        <NavItem href="/main/companyBuyerRegister" texto="Cadastro de empresa - Comprador" />
+                    </li>
+                    <li>
+                        <NavItem href="/main/productRegister" texto="Cadastro de produtos" />
                     </li>
                 </ul>
             </div>

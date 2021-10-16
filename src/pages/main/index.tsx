@@ -10,13 +10,14 @@ export default function index() {
     return (
         <>
             <Head>
-                <title>MAIN</title>
+                <title>Inicio</title>
             </Head>
             <Layout>
-                <h1>MAIN</h1>
-                <h1>FirstName: {user?.firstName}</h1>
-                <h1>Email: {user?.email}</h1>
-
+                <div className="m-auto">
+                    <div className={`flex flex-col items-center justify-center`}>
+                        <h2 className="text-center text-3xl font-extrabold">Produtos mais vendidos</h2>
+                    </div>
+                </div>
 
             </Layout>
         </>

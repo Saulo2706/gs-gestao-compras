@@ -20,7 +20,7 @@ export default function AvatarUser(props: AvatarUserProps) {
                     <a href="/main/user">Meus Dados</a>
                 </li>
                 <li className="hover:bg-gray-200 rounded-box">
-                    <a href="/main/company">Dados da Empresa</a>
+                    <a href="/main/company">Minha Empresa</a>
                 </li>
                 <li className="hover:bg-gray-200 rounded-box">
                     <a>Sair</a>
