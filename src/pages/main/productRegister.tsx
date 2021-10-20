@@ -1,5 +1,6 @@
 import Layout from "../../components/template/Layout";
 import Head from 'next/head'
+import { QuestionIcon } from "../../components/icons";
 export default function productRegister() {
 
     return (
@@ -40,6 +41,49 @@ export default function productRegister() {
                                     id="productDescription"
                                     name="productDescription"
                                     rows={4}
+                                    className={`
+                                            px-4 py-3 rounded-lg bg-gray-200 mt-2 
+                                            border focus:border-blue-500 focus:bg-white
+                                            focus:outline-none
+                                        `}
+                                />
+                            </div>
+                        </div>
+                        <div className="rounded-md shadow-sm -space-y-px">
+                            <div className="flex flex-col mt-4">
+                                <label>Un Medida:</label>
+                                <select
+                                    required
+                                    placeholder="Un Medida"
+                                    id="unMedida"
+                                    name="unMedida"
+                                    className={`
+                                            px-4 py-3 rounded-lg bg-gray-200 mt-2 
+                                            border focus:border-blue-500 focus:bg-white
+                                            focus:outline-none
+                                        `}
+                                >
+                                    <option value="">Selecione...</option>
+                                    <option value="Un">Un</option>
+                                    <option value="M">M</option>
+                                    <option value="cm">cm</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="rounded-md shadow-sm -space-y-px">
+                            <div className="flex flex-col mt-4">
+                                <div className="flex-none flex">
+                                    Valor padrão:
+                                    <div data-tip="É O PREÇO PADRÃO DE SEU PRODUTO!" className="tooltip tooltip-SECONDARY tooltip-right ml-2">
+                                        {QuestionIcon}
+                                    </div>
+                                </div>
+                                <input
+                                    type="text"
+                                    placeholder="Valor Padrão"
+                                    required
+                                    id="priceDefault"
+                                    name="priceDefault"
                                     className={`
                                             px-4 py-3 rounded-lg bg-gray-200 mt-2 
                                             border focus:border-blue-500 focus:bg-white

@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { useContext } from 'react';
 import { AuthContext } from '../data/context/AuthContext';
 
-export default function SignUp() {
+export default function Signup() {
     const { register, handleSubmit } = useForm();
     const { signUp } = useContext(AuthContext)
 
@@ -97,7 +97,7 @@ export default function SignUp() {
                             <select
                                 {...register('gender')}
                                 required
-                                placeholder="Dt. Nascumento"
+                                placeholder="Genero"
                                 id="gender"
                                 name="gender"
                                 autoComplete="sex"
@@ -193,7 +193,7 @@ export default function SignUp() {
                     </div>
                 </form>
                 <div>
-                    <a href="signIn" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    <a href="signin" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                         Ja tem uma conta? Entre aqui!
                     </a>
                 </div>

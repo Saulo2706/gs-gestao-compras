@@ -41,12 +41,12 @@ export function AuthProvider({ children }) {
             try {
                 const { data: user } = await api.get('api/profile', { withCredentials: true })
                 if (user) setUser(user);
-                if (Router.pathname == '/signIn' || Router.pathname == '/signUp') {
+                if (Router.pathname == '/signin' || Router.pathname == '/signup') {
                     Router.push('/main/');
                 }
             } catch (error) {
-                if (Router.pathname != '/signIn' && Router.pathname != '/signUp') {
-                    Router.push('/signIn');
+                if (Router.pathname != '/signin' && Router.pathname != '/signup') {
+                    Router.push('/signin');
                 }
                 console.log(error.response)
             }
@@ -76,7 +76,7 @@ export function AuthProvider({ children }) {
         try {
             const { data: user } = await api.post('auth/signup', { firstName, lastName, email, birthday, gender, password }, { withCredentials: true })
             setUser(user)
-            Router.push('/');
+            Router.push('/main/');
         } catch (error) {
             console.log(error)
             console.log(error.response)

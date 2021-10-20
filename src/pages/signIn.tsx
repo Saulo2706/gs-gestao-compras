@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { useContext } from 'react';
 import { AuthContext } from '../data/context/AuthContext';
 
-export default function signIn() {
+export default function Signin() {
     const { register, handleSubmit } = useForm();
     const {signIn} = useContext(AuthContext)
 
@@ -98,7 +98,7 @@ export default function signIn() {
                     </div>
                 </form>
                 <div>
-                    <a href="signUp" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    <a href="signup" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                         Ainda não tem uma conta? Registre-se aqui!
                     </a>
                 </div>
