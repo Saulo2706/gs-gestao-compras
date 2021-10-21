@@ -39,7 +39,7 @@ export function AuthProvider({ children }) {
 
         async function loadUser() {
             try {
-                const { data: user } = await api.get('api/profile', { withCredentials: true })
+                const { data: user } = await api.get('api/profile')
                 if (user) setUser(user);
                 if (Router.pathname == '/signin' || Router.pathname == '/signup') {
                     Router.push('/main/');
@@ -52,13 +52,13 @@ export function AuthProvider({ children }) {
             }
         }
 
-        //loadUser()
+        loadUser()
 
     }, [])
 
     async function signIn({ email, password }: SignInData) {
         try {
-            const { data: user } = await api.post('auth/signin', { email, password }, { withCredentials: true })
+            const { data: user } = await api.post('auth/signin', { email, password })
             setUser(user)
             Router.push('/main/');
         } catch (error) {
@@ -74,7 +74,7 @@ export function AuthProvider({ children }) {
 
     async function signUp({ firstName, lastName, email, birthday, gender, password }: SignUpData) {
         try {
-            const { data: user } = await api.post('auth/signup', { firstName, lastName, email, birthday, gender, password }, { withCredentials: true })
+            const { data: user } = await api.post('auth/signup', { firstName, lastName, email, birthday, gender, password })
             setUser(user)
             Router.push('/main/');
         } catch (error) {

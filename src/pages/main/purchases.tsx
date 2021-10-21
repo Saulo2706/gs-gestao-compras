@@ -12,7 +12,16 @@ export default function purchases() {
 
     useEffect(() => {
         $(document).ready(function () {
-            $('#example').DataTable();
+            $('#purshaces').DataTable({
+                language: {
+                    "url": '../api/dataTableTranslate'
+                  },
+                aLengthMenu: [
+                    [25, 50, 100, 200, -1],
+                    [25, 50, 100, 200, "todos"]
+                ],
+                iDisplayLength: 25
+            });
         });
     }, [])
 
@@ -28,7 +37,7 @@ export default function purchases() {
                     </div>
                     <br />
                     <div className="bg-gray-200 mt-3 p-2 w-screen max-w-screen-lg m-auto rounded-sm dark:text-gray-800">
-                        <table id="example" className="display">
+                        <table id="purshaces" className="display">
                             <thead>
                                 <tr>
                                     <th>Produto</th>
