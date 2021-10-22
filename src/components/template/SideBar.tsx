@@ -8,19 +8,19 @@ export default function SideBar() {
             {/*<label htmlFor="my-drawer" className="drawer-overlay"></label>*/}
                 <ul className="flex-grow menu p-4 bg-base-100">
                     <li>
-                        <NavItem href="/main" texto="Inicio" />
+                        <NavItem href="/app" texto="Inicio" />
                     </li>
                     <li>
-                        <NavItem href="/main/purchases" texto="Compras" />
+                        <NavItem href="/app/purchases" texto="Compras" />
                     </li>
                     <li>
-                        <NavItem href="/main/sales" texto="Vendas" />
+                        <NavItem href="/app/sales" texto="Vendas" />
                     </li>
                     <li>
-                        <NavItem href="/main/companyRegister" texto="Cadastro de empresa" />
+                        <NavItem href="/app/companyManagement" texto="Gerenciamento de empresa" />
                     </li>
                     <li>
-                        <NavItem href="/main/productRegister" texto="Cadastro de produtos" />
+                        <NavItem href="/app/productRegister" texto="Cadastro de produtos" />
                     </li>
                 </ul>
             </div>

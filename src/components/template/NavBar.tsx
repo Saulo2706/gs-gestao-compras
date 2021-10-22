@@ -1,17 +1,28 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import useAppData from "../../data/hook/useAppData";
 import AvatarUser from "./AvatarUser";
-import { useEffect } from "react";
-import NavItem from "./NavItem";
+import { useEffect, useState } from "react";
 import Logo from "./Logo";
 import ButtonAlterTheme from "./ButtonAlterTheme";
-import { SearchIcon, MenuIcon } from "../icons";
+import { MenuIcon } from "../icons";
+import api from '../../services/api';
 
 import 'jquery/dist/jquery.min.js';
 import $ from 'jquery';
 
+interface ICompanyes {
+    createdAt: string;
+    document: string;
+    foundedAt: string;
+    id: string;
+    logo: string;
+    name: string;
+
+}
+
 export default function NavBar(props) {
     const { theme, alterTheme } = useAppData()
+    const [companyes, setCompanyes] = useState<ICompanyes[]>([]);
 
     useEffect(() => {
         $(document).ready(function () {
@@ -28,8 +39,19 @@ export default function NavBar(props) {
                 $("#button_open_drawer").show();
                 $("#button_close_drawer").hide();
             });
-
         });
+
+        async function loadCompany() {
+            try {
+                const { data: companyes } = await api.get('api/company/my')
+                setCompanyes(companyes)
+            } catch (error) {
+                console.log(error.response)
+            }
+        }
+
+        loadCompany()
+
     }, [])
 
     return (
@@ -46,24 +68,33 @@ export default function NavBar(props) {
                             B2B
                         </span>
                     </div>
-                </div>
-                {/*<div className="hidden px-2 mx-2 navbar-center lg:flex">
-                <div className="flex items-stretch">
-                    <NavItem href="/main" texto="Inicio" />
-                </div>
-            </div>*/}
-                <div className="navbar-end">
-                    <div>
-                        <input type="text" placeholder="Buscar" className="input input-ghost w-full" />
+                    <div className="ml-5">
+                        <select
+                            required
+                            placeholder="Empresa"
+                            id="company"
+                            name="company"
+                            className={`
+                                            input input-ghost w-full mr-5 bg-gray-700
+                                        `}
+                        >
+                            <option value="">Selecione...</option>
+                            {companyes.map(company => {
+                                return (
+                                    <option key={company.id} id={company.id}>
+                                        {company.name}
+                                    </option>
+                                )
+                            })}
+                        </select>
                     </div>
-                    <button className="btn btn-square btn-ghost mr-3">
-                        {SearchIcon}
-                    </button>
+                </div>
+                <div className="navbar-end">
                     <ButtonAlterTheme theme={theme} alterTheme={alterTheme} />
                     <AvatarUser className="ml-4 mr-4" />
                 </div>
             </div >
-            
+
 
         </>
     )

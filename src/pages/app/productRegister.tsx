@@ -25,7 +25,7 @@ export default function productRegister() {
                                     id="productName"
                                     name="productName"
                                     className={`
-                                            px-4 py-3 rounded-lg bg-gray-200 mt-2 
+                                            px-4 py-3 rounded-lg bg-gray-200 mt-2 text-black
                                             border focus:border-blue-500 focus:bg-white
                                             focus:outline-none
                                         `}
@@ -42,7 +42,7 @@ export default function productRegister() {
                                     name="productDescription"
                                     rows={4}
                                     className={`
-                                            px-4 py-3 rounded-lg bg-gray-200 mt-2 
+                                            px-4 py-3 rounded-lg bg-gray-200 mt-2 text-black
                                             border focus:border-blue-500 focus:bg-white
                                             focus:outline-none
                                         `}
@@ -58,7 +58,7 @@ export default function productRegister() {
                                     id="unMedida"
                                     name="unMedida"
                                     className={`
-                                            px-4 py-3 rounded-lg bg-gray-200 mt-2 
+                                            px-4 py-3 rounded-lg bg-gray-200 mt-2 text-black
                                             border focus:border-blue-500 focus:bg-white
                                             focus:outline-none
                                         `}
@@ -85,7 +85,7 @@ export default function productRegister() {
                                     id="priceDefault"
                                     name="priceDefault"
                                     className={`
-                                            px-4 py-3 rounded-lg bg-gray-200 mt-2 
+                                            px-4 py-3 rounded-lg bg-gray-200 mt-2 text-black
                                             border focus:border-blue-500 focus:bg-white
                                             focus:outline-none
                                         `}
@@ -103,7 +103,7 @@ export default function productRegister() {
                                     id="productPhotos"
                                     name="productPhotos"
                                     className={`
-                                            px-4 py-3 rounded-lg bg-gray-200 mt-2 
+                                            px-4 py-3 rounded-lg bg-gray-200 mt-2 text-black
                                             border focus:border-blue-500 focus:bg-white
                                             focus:outline-none
                                         `}

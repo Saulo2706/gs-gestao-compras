@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
                 const { data: user } = await api.get('api/profile')
                 if (user) setUser(user);
                 if (Router.pathname == '/signin' || Router.pathname == '/signup') {
-                    Router.push('/main/');
+                    Router.push('/app/');
                 }
             } catch (error) {
                 if (Router.pathname != '/signin' && Router.pathname != '/signup') {
@@ -60,7 +60,7 @@ export function AuthProvider({ children }) {
         try {
             const { data: user } = await api.post('auth/signin', { email, password })
             setUser(user)
-            Router.push('/main/');
+            Router.push('/app/');
         } catch (error) {
             console.log(error)
             console.log(error.response)
@@ -76,7 +76,7 @@ export function AuthProvider({ children }) {
         try {
             const { data: user } = await api.post('auth/signup', { firstName, lastName, email, birthday, gender, password })
             setUser(user)
-            Router.push('/main/');
+            Router.push('/app/');
         } catch (error) {
             console.log(error)
             console.log(error.response)
