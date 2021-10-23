@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { showNotify } from "../../functions/showNotify";
 import { useForm } from 'react-hook-form'
 import Router from "next/router";
+import DataTable from "../../components/template/DataTable";
 
 interface ICompanyes {
     document: string;
@@ -89,6 +90,24 @@ export default function companyManagement() {
             } catch (error) {
                 console.log(error)
                 console.log(error.response)
+                $(document).ready(function () {
+                    $('#companyes').DataTable({
+                        language: {
+                            "url": '../api/dataTableTranslate'
+                        },
+                        aLengthMenu: [
+                            [25, 50, 100, 200, -1],
+                            [25, 50, 100, 200, "todos"]
+                        ],
+                        iDisplayLength: 25,
+                        columns: [
+                            { title: "Nome da empresa" },
+                            { title: "CNPJ" },
+                            { title: "Data de Fundação" },
+                            { title: "Ação" }
+                        ]
+                    });
+                });
                 if (error.response) {
                     validateResponse(error.response.data.message)
                 } else {
@@ -127,22 +146,21 @@ export default function companyManagement() {
             </Head>
             <Layout>
                 <div>
-                    <div className={`flex flex-row items-center justify-center`}>
-                        <h2 className="text-center text-3xl font-extrabold">Empresas</h2>
-                    </div>
                     <br />
-                    <div className="bg-gray-200 mt-3 p-2 w-screen max-w-screen-lg m-auto rounded-sm dark:text-gray-800">
-                        <table id="companyes" className="display">
-                            <tbody>
-                                {renderRows()}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className="mt-5 text-right">
-                        <label htmlFor="my-modal-2" className="bg-blue-500 hover:bg-blue-700 btn modal-button">Adicionar Empresa</label>
+                    <div className="bg-gray-200 mt-3 p-2 w-screen max-w-screen-lg m-auto rounded-md dark:text-gray-800">
+                        <div className="grid grid-cols-12 gap-4 p-2">
+                            <div className="col-span-8">
+                                <h2 className="text-left text-2xl font-extrabold">Empresas</h2>
+                            </div>
+                            <div className="col-span-4 text-right">
+                                <label htmlFor="my-modal-2" className="bg-blue-500 hover:bg-blue-700 btn modal-button">Adicionar Empresa</label>
+                            </div>
+                        </div>
+                        <DataTable id="companyes">
+                            {renderRows()}
+                        </DataTable>
                     </div>
                 </div>
-
 
                 {/* MODAL ADD */}
                 <input type="checkbox" id="my-modal-2" className="modal-toggle" />

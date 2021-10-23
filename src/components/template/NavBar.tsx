@@ -26,18 +26,15 @@ export default function NavBar(props) {
 
     useEffect(() => {
         $(document).ready(function () {
-            $("#button_open_drawer").hide();
-
+            let aberto = 1;
             $("#button_open_drawer").click(function () {
-                $("#drawer-menu").show();
-                $("#button_open_drawer").hide();
-                $("#button_close_drawer").show();
-            });
-
-            $("#button_close_drawer").click(function () {
-                $("#drawer-menu").hide();
-                $("#button_open_drawer").show();
-                $("#button_close_drawer").hide();
+                if(aberto == 1){
+                    aberto = 0
+                    $("#drawer-menu").hide();
+                }else{
+                    aberto = 1
+                    $("#drawer-menu").show();
+                }
             });
         });
 
@@ -60,7 +57,6 @@ export default function NavBar(props) {
                 <div className="px-2 mx-2 navbar-start">
                     <div className="flex-none hidden xl:flex mr-2">
                         <label id="button_open_drawer" className="btn btn-square btn-ghost">{MenuIcon}</label>
-                        <label id="button_close_drawer" className="btn btn-square btn-ghost">{MenuIcon}</label>
                     </div>
                     <Logo />
                     <div className="flex-initial px-2 mx-2 lg:flex">
