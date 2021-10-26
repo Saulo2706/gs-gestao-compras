@@ -52,7 +52,7 @@ export function AuthProvider({ children }) {
             }
         }
 
-        loadUser()
+       // loadUser()
 
     }, [])
 

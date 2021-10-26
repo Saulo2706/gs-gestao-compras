@@ -18,8 +18,8 @@ export default function purchases() {
                     "url": '../api/dataTableTranslate'
                 },
                 aLengthMenu: [
-                    [25, 50, 100, 200, -1],
-                    [25, 50, 100, 200, "todos"]
+                    [25, 50, 100],
+                    [25, 50, 100]
                 ],
                 iDisplayLength: 25,
                 columns: [
@@ -28,7 +28,8 @@ export default function purchases() {
                     { title: "Quantidade" },
                     { title: "Valor" },
                     { title: "Ação" }
-                ]
+                ],
+                scrollY: "300px",
             });
         });
     }, [])
@@ -44,7 +45,7 @@ export default function purchases() {
                         <h2 className="text-center text-3xl font-extrabold">Histórico de Compras</h2>
                     </div>
                     <br />
-                    <div className="bg-gray-200 mt-3 p-2 w-screen max-w-screen-lg m-auto rounded-sm dark:text-gray-800">
+                    <div className="bg-gray-200 mt-3 p-2 w-screen max-w-screen-md m-auto rounded-sm dark:text-gray-800">
                         <DataTable id="purchases">
                             <tr>
                                 <td>Celular</td>
@@ -58,6 +59,476 @@ export default function purchases() {
                                 </button></td>
                             </tr>
                             <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
+                                <td>Caneta</td>
+                                <td>14/10/2021</td>
+                                <td>5</td>
+                                <td>R$ 30,00</td>
+                                <td><button
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Detalhes
+                                </button></td>
+                            </tr>                            <tr>
                                 <td>Caneta</td>
                                 <td>14/10/2021</td>
                                 <td>5</td>

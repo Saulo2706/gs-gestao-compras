@@ -13,7 +13,7 @@ export default function index() {
                 <title>Inicio</title>
             </Head>
             <Layout>
-                <div className="m-auto">
+                <div>
                     <div className={`flex flex-col items-center justify-center`}>
                         <h2 className="text-center text-3xl font-extrabold">Produtos mais vendidos</h2>
                     </div>

@@ -96,8 +96,8 @@ export default function companyManagement() {
                             "url": '../api/dataTableTranslate'
                         },
                         aLengthMenu: [
-                            [25, 50, 100, 200, -1],
-                            [25, 50, 100, 200, "todos"]
+                            [25, 50, 100],
+                            [25, 50, 100]
                         ],
                         iDisplayLength: 25,
                         columns: [
@@ -105,7 +105,8 @@ export default function companyManagement() {
                             { title: "CNPJ" },
                             { title: "Data de Fundação" },
                             { title: "Ação" }
-                        ]
+                        ],
+                        scrollY: "300px",
                     });
                 });
                 if (error.response) {
@@ -123,17 +124,19 @@ export default function companyManagement() {
         return (
             companyes.map(company => {
                 return (
-                    <tr key={company.id}>
-                        <td className="text-center">{company.name}</td>
-                        <td className="text-center">{company.document}</td>
-                        <td className="text-center">{company.foundedAt}</td>
-                        <td>{
-                            <div className="text-center">
-                                <button className="text-yellow-400 mr-5">{EditIcon}</button>
-                                <button className="text-red-600">{TrashIcon}</button>
-                            </div>
-                        }</td>
-                    </tr>
+                    <>
+                        <tr key={company.id}>
+                            <td className="text-center">{company.name}</td>
+                            <td className="text-center">{company.document}</td>
+                            <td className="text-center">{company.foundedAt}</td>
+                            <td>{
+                                <div className="text-center">
+                                    <label htmlFor={`modalEditCompany${company.id}`} className="text-yellow-400 mr-5 btn modal-button">{EditIcon}</label>
+                                    <label htmlFor={`modalRemCompany${company.id}`} className="text-red-600 btn modal-button">{TrashIcon}</label>
+                                </div>
+                            }</td>
+                        </tr>
+                    </>
                 )
             })
         )
@@ -147,13 +150,13 @@ export default function companyManagement() {
             <Layout>
                 <div>
                     <br />
-                    <div className="bg-gray-200 mt-3 p-2 w-screen max-w-screen-lg m-auto rounded-md dark:text-gray-800">
+                    <div className="bg-gray-200 mt-3 p-2 w-screen max-w-screen-md m-auto rounded-md dark:text-gray-800">
                         <div className="grid grid-cols-12 gap-4 p-2">
                             <div className="col-span-8">
                                 <h2 className="text-left text-2xl font-extrabold">Empresas</h2>
                             </div>
                             <div className="col-span-4 text-right">
-                                <label htmlFor="my-modal-2" className="bg-blue-500 hover:bg-blue-700 btn modal-button">Adicionar Empresa</label>
+                                <label htmlFor="modalAddCompany" className="bg-blue-500 hover:bg-blue-700 btn modal-button">Adicionar Empresa</label>
                             </div>
                         </div>
                         <DataTable id="companyes">
@@ -163,7 +166,7 @@ export default function companyManagement() {
                 </div>
 
                 {/* MODAL ADD */}
-                <input type="checkbox" id="my-modal-2" className="modal-toggle" />
+                <input type="checkbox" id="modalAddCompany" className="modal-toggle" />
                 <div className="modal">
                     <div className="modal-box bg-white">
                         <div className={`flex flex-col items-center justify-center`}>
@@ -232,7 +235,7 @@ export default function companyManagement() {
                                 >
                                     Cadastrar Empresa
                                 </button>
-                                <label htmlFor="my-modal-2" className="cursor-pointer group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mt-3">Cancelar</label>
+                                <label htmlFor="modalAddCompany" className="cursor-pointer group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mt-3">Cancelar</label>
                             </div>
                         </form>
                     </div>

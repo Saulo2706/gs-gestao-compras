@@ -20,6 +20,11 @@ interface ICompanyes {
 
 }
 
+function saveCompanyLocalStorage() {
+    var company = (document.getElementById("company") as HTMLInputElement).value;
+    localStorage.setItem("company", company);
+}
+
 export default function NavBar(props) {
     const { theme, alterTheme } = useAppData()
     const [companyes, setCompanyes] = useState<ICompanyes[]>([]);
@@ -28,22 +33,36 @@ export default function NavBar(props) {
         $(document).ready(function () {
             let aberto = 1;
             $("#button_open_drawer").click(function () {
-                if(aberto == 1){
+                if (aberto == 1) {
                     aberto = 0
                     $("#drawer-menu").hide();
-                }else{
+                } else {
                     aberto = 1
                     $("#drawer-menu").show();
                 }
             });
+
+
         });
 
         async function loadCompany() {
             try {
                 const { data: companyes } = await api.get('api/company/my')
                 setCompanyes(companyes)
+                if (typeof window !== "undefined") {
+                    if (localStorage.company) {
+                        console.log("cai no if");
+                        (document.getElementById('company') as HTMLInputElement).value = localStorage.company;
+                    }
+                }
             } catch (error) {
                 console.log(error.response)
+                if (typeof window !== "undefined") {
+                    if (localStorage.company) {
+                        console.log("cai no if");
+                        (document.getElementById('company') as HTMLInputElement).value = localStorage.company;
+                    }
+                }
             }
         }
 
@@ -70,14 +89,16 @@ export default function NavBar(props) {
                             placeholder="Empresa"
                             id="company"
                             name="company"
+                            onChange={saveCompanyLocalStorage}
                             className={`
                                             input input-ghost w-full mr-5 bg-gray-700
                                         `}
                         >
                             <option value="">Selecione...</option>
+                            <option value="jorge">teste...</option>
                             {companyes.map(company => {
                                 return (
-                                    <option key={company.id} id={company.id}>
+                                    <option key={company.id} id={company.id} value={company.id}>
                                         {company.name}
                                     </option>
                                 )

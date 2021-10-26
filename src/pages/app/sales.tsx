@@ -18,8 +18,8 @@ export default function sales() {
                     "url": '../api/dataTableTranslate'
                 },
                 aLengthMenu: [
-                    [25, 50, 100, 200, -1],
-                    [25, 50, 100, 200, "todos"]
+                    [25, 50, 100],
+                    [25, 50, 100]
                 ],
                 iDisplayLength: 25,
                 columns: [
@@ -28,7 +28,8 @@ export default function sales() {
                     { title: "Quantidade" },
                     { title: "Valor" },
                     { title: "Ação" }
-                ]
+                ],
+                scrollY: "300px",
             });
         });
     }, [])
