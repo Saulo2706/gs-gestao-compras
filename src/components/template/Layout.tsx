@@ -10,20 +10,25 @@ interface LayoutProps {
 export default function Layout(props: LayoutProps) {
     const { theme } = useAppData()
     return (
-        <div className={`${theme} flex flex-col h-screen w-screen`}>
-            <header>
+        <div className={`${theme} flex flex-col h-screen bg-gray-300 dark:bg-gray-700`}>
+            <header className="sticky top-0 z-50">
                 <NavBar />
             </header>
-            <div className={`
-                flex flex-col w-full h-full
-                bg-gray-300 dark:bg-gray-700
-                `}>
-                <div className={`flex flex-row h-screen`}>
-                    <SideBar />
-                    <Content>
-                        {props.children}
-                    </Content>
-                </div>
+            <div className="drawer drawer-mobile">
+                <input id="main-menu" type="checkbox" className="drawer-toggle" />
+                <main className="flex-grow block bg-gray-300 dark:bg-gray-700 text-base-content drawer-content">
+                    <div className={`
+                        flex flex-col
+                        bg-gray-300 dark:bg-gray-700
+                        `}>
+                        <div className={`flex flex-row`}>
+                            <Content>
+                                {props.children}
+                            </Content>
+                        </div>
+                    </div>
+                </main>
+                <SideBar />
             </div>
         </div>
     )
