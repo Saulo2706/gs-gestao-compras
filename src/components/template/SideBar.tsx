@@ -18,10 +18,10 @@ export default function SideBar() {
                             <NavItem href="/app/sales" texto="Vendas" />
                         </li>
                         <li>
-                            <NavItem href="/app/companyManagement" texto="Gerenciamento de empresa" />
+                            <NavItem href="/app/companyManagement" texto="Empresas" />
                         </li>
                         <li>
-                            <NavItem href="/app/productManagement" texto="Cadastro de produtos" />
+                            <NavItem href="/app/productManagement" texto="Produtos" />
                         </li>
                     </ul>
                 </div>

@@ -30,19 +30,6 @@ export default function NavBar(props) {
     const [companyes, setCompanyes] = useState<ICompanyes[]>([]);
 
     useEffect(() => {
-        $(document).ready(function () {
-            /*let aberto = 1;
-            $("#button_open_drawer").click(function () {
-                if (aberto == 1) {
-                    aberto = 0
-                    $("#drawer-menu").hide();
-                } else {
-                    aberto = 1
-                    $("#drawer-menu").show();
-                }
-            });*/
-        });
-
         async function loadCompany() {
             try {
                 const { data: companyes } = await api.get('api/company/my')
@@ -91,7 +78,6 @@ export default function NavBar(props) {
                                         `}
                         >
                             <option value="">Selecione...</option>
-                            <option value="jorge">teste...</option>
                             {companyes.map(company => {
                                 return (
                                     <option key={company.id} id={company.id} value={company.id}>

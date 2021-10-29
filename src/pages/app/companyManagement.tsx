@@ -83,7 +83,8 @@ export default function companyManagement() {
                             { title: "CNPJ" },
                             { title: "Data de Fundação" },
                             { title: "Ação" }
-                        ]
+                        ],
+                        scrollY: "300px",
                     });
                 });
 
