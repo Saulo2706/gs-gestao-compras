@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Image from 'next/image'
 interface AvatarUserProps {
     className?: string
 }
@@ -6,11 +7,13 @@ export default function AvatarUser(props: AvatarUserProps) {
     //const {usuario} = useAuth
     return (
         <div tabIndex={0} className="dropdown dropdown-end">
-            <div className="m-1">
-                <img src={'/img/avatar.svg'}
+            <div className="mt-1 ml-3">
+                <Image src={'/img/avatar.svg'}
                     alt="avatar"
+                    width="24px"
+                    height="24px"
                     className={`
-                        h-6 w-6 rounded-full cursor-pointer
+                        rounded-full cursor-pointer
                         ${props.className}
                     `}
                 />

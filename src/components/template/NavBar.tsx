@@ -8,7 +8,7 @@ import { MenuIcon } from "../icons";
 import api from '../../services/api';
 
 import 'jquery/dist/jquery.min.js';
-import $ from 'jquery';
+import ButtonAlterMode from "./ButtonAlterMode";
 
 interface ICompanyes {
     createdAt: string;
@@ -27,6 +27,7 @@ function saveCompanyLocalStorage() {
 
 export default function NavBar(props) {
     const { theme, alterTheme } = useAppData()
+    const { mode, alterMode } = useAppData()
     const [companyes, setCompanyes] = useState<ICompanyes[]>([]);
 
     useEffect(() => {
@@ -89,6 +90,7 @@ export default function NavBar(props) {
                     </div>
                 </div>
                 <div className="navbar-end">
+                    <ButtonAlterMode mode={mode} alterMode={alterMode}/>
                     <ButtonAlterTheme theme={theme} alterTheme={alterTheme} />
                     <AvatarUser className="ml-4 mr-4" />
                 </div>
