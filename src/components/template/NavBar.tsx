@@ -1,14 +1,15 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import useAppData from "../../data/hook/useAppData";
 import AvatarUser from "./AvatarUser";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "./Logo";
-import ButtonAlterTheme from "./ButtonAlterTheme";
 import { MenuIcon } from "../icons";
 import api from '../../services/api';
 
 import 'jquery/dist/jquery.min.js';
+import ButtonAlterTheme from "./ButtonAlterTheme";
 import ButtonAlterMode from "./ButtonAlterMode";
+import ButtonAlterCompany from "./ButtonAlterCompany";
 
 interface ICompanyes {
     createdAt: string;
@@ -20,39 +21,9 @@ interface ICompanyes {
 
 }
 
-function saveCompanyLocalStorage() {
-    var company = (document.getElementById("company") as HTMLInputElement).value;
-    localStorage.setItem("company", company);
-}
-
 export default function NavBar(props) {
     const { theme, alterTheme } = useAppData()
     const { mode, alterMode } = useAppData()
-    const [companyes, setCompanyes] = useState<ICompanyes[]>([]);
-
-    useEffect(() => {
-        async function loadCompany() {
-            try {
-                const { data: companyes } = await api.get('api/company/my')
-                setCompanyes(companyes)
-                if (typeof window !== "undefined") {
-                    if (localStorage.company) {
-                        (document.getElementById('company') as HTMLInputElement).value = localStorage.company;
-                    }
-                }
-            } catch (error) {
-                console.log(error.response)
-                if (typeof window !== "undefined") {
-                    if (localStorage.company) {
-                        (document.getElementById('company') as HTMLInputElement).value = localStorage.company;
-                    }
-                }
-            }
-        }
-
-        loadCompany()
-
-    }, [])
 
     return (
         <>
@@ -61,37 +32,17 @@ export default function NavBar(props) {
                     <div className="flex-none mr-2">
                         <label htmlFor="main-menu" id="button_open_drawer" className="btn btn-square btn-ghost drawer-button lg:hidden">{MenuIcon}</label>
                     </div>
-                    <Logo />
+                    <a href="/app"><Logo /></a>
                     <div className="flex-initial px-2 mx-2 lg:flex">
                         <span className="text-lg font-bold">
-                            B2B
+                            <a href="/app">B2B</a>
                         </span>
-                    </div>
-                    <div className="ml-5">
-                        <select
-                            required
-                            placeholder="Empresa"
-                            id="company"
-                            name="company"
-                            onChange={saveCompanyLocalStorage}
-                            className={`
-                                            input input-ghost w-full mr-5 bg-gray-700
-                                        `}
-                        >
-                            <option value="">Selecione...</option>
-                            {companyes.map(company => {
-                                return (
-                                    <option key={company.id} id={company.id} value={company.id}>
-                                        {company.name}
-                                    </option>
-                                )
-                            })}
-                        </select>
                     </div>
                 </div>
                 <div className="navbar-end">
                     <ButtonAlterMode mode={mode} alterMode={alterMode}/>
                     <ButtonAlterTheme theme={theme} alterTheme={alterTheme} />
+                    <ButtonAlterCompany/>
                     <AvatarUser className="ml-4 mr-4" />
                 </div>
             </div >

@@ -16,6 +16,12 @@ export default function ButtonAlterMode(props: ButtonAlterModeProps) {
             `}>
                 {IconProvider(5)}
             </div>
+            <div className={`
+                hidden lg:flex items-center ml-4
+                text-white
+            `}>
+                <span>Fornecedor</span>
+            </div>
         </div>
     ) : (
         <div onClick={props.alterMode} className={`
@@ -27,6 +33,12 @@ export default function ButtonAlterMode(props: ButtonAlterModeProps) {
                 w-6 h-6 rounded-full
             `}>
                 {IconShopping(5)}
+            </div>
+            <div className={`
+                hidden lg:flex items-center ml-4
+                text-white
+            `}>
+                <span>Comprador</span>
             </div>
         </div>
     )

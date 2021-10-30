@@ -9,11 +9,11 @@ import $ from 'jquery';
 import { useEffect } from "react";
 import DataTable from "../../components/template/DataTable";
 
-export default function sales() {
+export default function budgetsOrders() {
 
     useEffect(() => {
         $(document).ready(function () {
-            $('#sales').DataTable({
+            $('#budgetsOrders').DataTable({
                 language: {
                     "url": '../api/dataTableTranslate'
                 },
@@ -37,16 +37,16 @@ export default function sales() {
     return (
         <>
             <Head>
-                <title>Vendas</title>
+                <title>Orçamentos</title>
             </Head>
             <Layout>
                 <div>
                     <div className={`flex flex-row items-center justify-center`}>
-                        <h2 className="text-center text-3xl font-extrabold">Vendas</h2>
+                        <h2 className="text-center text-3xl font-extrabold">Orçamentos</h2>
                     </div>
                     <br />
                     <div className="bg-gray-200 mt-3 p-2 w-screen max-w-screen-md m-auto rounded-sm dark:text-gray-800">
-                        <DataTable id="sales">
+                        <DataTable id="budgetsOrders">
                             <tr>
                                 <td>Celular</td>
                                 <td>10/10/2021</td>

@@ -65,6 +65,7 @@ export default function companyManagement() {
             }
         });
     }
+
     useEffect(() => {
         $(document).ready(function () {
             $('#companyes').DataTable({
@@ -76,7 +77,7 @@ export default function companyManagement() {
                         withCredentials: true
                     },
                     error: function (xhr) {
-                        console.log("Erro " + xhr.status, xhr.responseText, true);
+                        showNotify("Erro " + xhr.status, xhr.responseText, true);
                     }
                 },
                 language: {
@@ -101,10 +102,6 @@ export default function companyManagement() {
             });
         });
     }, [])
-
-
-
-
 
     function renderModalEdit() {
         return (
