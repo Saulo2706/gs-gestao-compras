@@ -34,7 +34,7 @@ export default function companyManagement() {
 
     const [companyes, setCompanyes] = useState<ICompanyes[]>([]);
     const { register, handleSubmit } = useForm();
-    const { baseUrlAjax } = useAppData()
+    const { baseUrl } = useAppData()
 
     function handleCompanyRegister(data) {//POST REGISTRO DE EMPRESA
 
@@ -71,8 +71,9 @@ export default function companyManagement() {
             $('#companyes').DataTable({
                 destroy: true,
                 ajax: {
-                    url: baseUrlAjax + "/api/company/my",
+                    url: baseUrl + "/api/company/my",
                     dataSrc: "",
+                    cache: true,
                     xhrFields: {
                         withCredentials: true
                     },
@@ -271,13 +272,13 @@ export default function companyManagement() {
                 <div className="modal">
                     <div className="modal-box bg-white">
                         <div className={`flex flex-col items-center justify-center`}>
-                            <h2 className="text-center text-3xl font-extrabold">Cadastrar empresa</h2>
+                            <h2 className="text-center text-3xl font-extrabold text-black">Cadastrar empresa</h2>
                         </div>
                         <form className="mt-8" onSubmit={handleSubmit(handleCompanyRegister)}>
                             <input type="hidden" name="remember" defaultValue="true" />
                             <div className="rounded-md shadow-sm -space-y-px">
                                 <div className="flex flex-col mt-4">
-                                    <label>Nome da Empresa:</label>
+                                    <label className={`text-black`}>Nome da Empresa:</label>
                                     <input
                                         {...register('name')}
                                         type="text"
@@ -295,7 +296,7 @@ export default function companyManagement() {
                             </div>
                             <div className="rounded-md shadow-sm -space-y-px">
                                 <div className="flex flex-col mt-4">
-                                    <label>CNPJ da Empresa:</label>
+                                    <label className={`text-black`}>CNPJ da Empresa:</label>
                                     <InputMask mask="99.999.999/9999-99"
                                         {...register('document')}
                                         type="text"
@@ -313,7 +314,7 @@ export default function companyManagement() {
                             </div>
                             <div className="rounded-md shadow-sm -space-y-px">
                                 <div className="flex flex-col mt-4">
-                                    <label>Data de fundação:</label>
+                                    <label className={`text-black`}>Data de fundação:</label>
                                     <input
                                         {...register('foundedAt')}
                                         type="date"

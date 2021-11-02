@@ -1,14 +1,10 @@
 import { createContext, useEffect, useState } from "react";
-import companyManagement from "../../pages/app/companyManagement";
-
-//type Theme = 'dark' | ''
-
 interface AppContextProps{
     theme: string
     alterTheme?: () => void
     mode: string
     alterMode?: () => void
-    baseUrlAjax: string
+    baseUrl: string
 }
 
 const AppContext = createContext<AppContextProps>({
@@ -16,7 +12,7 @@ const AppContext = createContext<AppContextProps>({
     alterTheme: null,
     mode: null,
     alterMode: null,
-    baseUrlAjax: null
+    baseUrl: null
     
 })
 
@@ -24,7 +20,7 @@ export function AppProvider(props){
     const [theme, setTheme] = useState('dark')
     const [mode, setMode] = useState('provider')
 
-    const baseUrlAjax = 'https://25.1.175.3:8443';
+    const baseUrl = 'https://25.1.175.3:8443';
 
     function alterTheme(){
         const newTheme = theme === '' ? 'dark' : ''
@@ -51,7 +47,7 @@ export function AppProvider(props){
             alterTheme,
             mode,
             alterMode,
-            baseUrlAjax,
+            baseUrl,
         }}>
             {props.children}
         </AppContext.Provider>

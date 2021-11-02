@@ -1,11 +1,11 @@
+/* eslint-disable @next/next/link-passhref */
 /* eslint-disable @next/next/no-html-link-for-pages */
 import useAppData from "../../data/hook/useAppData";
 import AvatarUser from "./AvatarUser";
 import React, { useEffect, useState } from "react";
 import Logo from "./Logo";
 import { MenuIcon } from "../icons";
-import api from '../../services/api';
-
+import Link from 'next/link'
 import 'jquery/dist/jquery.min.js';
 import ButtonAlterTheme from "./ButtonAlterTheme";
 import ButtonAlterMode from "./ButtonAlterMode";
@@ -32,10 +32,10 @@ export default function NavBar(props) {
                     <div className="flex-none mr-2">
                         <label htmlFor="main-menu" id="button_open_drawer" className="btn btn-square btn-ghost drawer-button lg:hidden">{MenuIcon}</label>
                     </div>
-                    <a href="/app"><Logo /></a>
+                    <Link href="/app"><Logo /></Link>
                     <div className="flex-initial px-2 mx-2 lg:flex">
                         <span className="text-lg font-bold">
-                            <a href="/app">B2B</a>
+                            <Link href="/app">B2B</Link>
                         </span>
                     </div>
                 </div>

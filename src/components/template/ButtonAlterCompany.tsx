@@ -43,14 +43,14 @@ export default function ButtonAlterCompany() {
                 if (company.id == localStorage.getItem('company')) {
                     return (
                         <>
-                            <li key={company.id} className="bg-gray-300 hover:bg-gray-200 rounded-box" onClick={() => alterCompany(company.id)} >
+                            <li key={`1${company.id}`} className="bg-gray-300 hover:bg-gray-200 rounded-box" onClick={() => alterCompany(company.id)} >
                                 <a href="#">{company.name}</a>
                             </li>
                         </>
                     )
                 } else {
                     return (
-                        <li key={company.id} className="hover:bg-gray-200 rounded-box" onClick={() => alterCompany(company.id)} >
+                        <li key={`2${company.id}`} className="hover:bg-gray-200 rounded-box" onClick={() => alterCompany(company.id)} >
                             <a href="">{company.name}</a>
                         </li>
                     )
