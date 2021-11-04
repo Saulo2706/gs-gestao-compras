@@ -3,6 +3,7 @@
 import Layout from "../../components/template/Layout";
 import Head from 'next/head'
 import { QuestionIcon } from "../../components/icons";
+import { default as FormData } from "form-data";
 import InputMask from 'react-input-mask';
 
 import 'jquery/dist/jquery.min.js';
@@ -20,11 +21,54 @@ import { useForm } from 'react-hook-form'
 import Router from "next/router";
 import DataTable from "../../components/template/DataTable";
 
+interface IUnitMeasures {
+    name: string;
+    description: string;
+    onlyInteger: string;
+    id: string;
+}
+
 export default function productManagement() {
 
+    const [unitMeasures, setUnitMeasures] = useState<IUnitMeasures[]>([]);
+    const { register, handleSubmit } = useForm();
     const { baseUrl } = useAppData()
 
+    function handleProductRegister(data) {//POST REGISTRO DE PRODUTO
+        const formData = new FormData();
+        formData.append("name", data.productName)
+        formData.append("description",data.productDescription)
+        formData.append("price", data.priceDefault)
+        formData.append("companyId", localStorage.getItem('company'))
+        formData.append("unitMeasureId", data.productUnMedida)
+        formData.append("images[0]", data.productPhotos[0])
 
+        const config = {
+            headers: {
+              'content-type': 'multipart/form-data'
+            }
+          }
+
+        api.post('api/product/my', formData, config).then(
+            res => {
+                if (res.status == 200) {
+                    showNotify("Sucesso", "Cadastro realizado com sucesso :)", "success")
+                    Router.reload()
+                } else {
+                    showNotify("Alerta", res.data.message + " Codigo: " + res.status, "warning")
+                }
+            }
+        ).catch((error) => {
+            console.log(error)
+            console.log(error.response)
+            if (error.response) {
+                validateResponse(error.response.data.message)
+            } else {
+                validateResponse("erro não identifiado")
+            }
+        });
+
+    }
 
     useEffect(() => {
         $(document).ready(function () {
@@ -47,6 +91,7 @@ export default function productManagement() {
                         dst.recordsFiltered = src.page.totalElements;
                         src._embedded.productVOList.forEach(el => {
                             el.unitMeasure = el.unitMeasure.name;
+                            el.unitMeasureId = el.id;
                             dst.data.push(el)
                         });
 
@@ -71,6 +116,7 @@ export default function productManagement() {
                     { data: "id" },
                     { data: "name" },
                     { data: "unitMeasure" },
+                    { data: "unitMeasureId", visible: false }
                 ],
                 scrollY: "300px",
                 stateSave: true,
@@ -92,7 +138,7 @@ export default function productManagement() {
             $('#editProduct').on('click', function () {
                 let product = table.row('.selected').child(1).data();
                 $('#productNameEdit').val(product.name);
-                $('#unMedidaEdit').val(product.unitMeasure);
+                $('#unMedidaEdit').val(product.unitMeasureId);
 
             });
 
@@ -103,7 +149,30 @@ export default function productManagement() {
 
             });
         });
+
+        async function loadUnitMeasure() {
+            try {
+                const { data: unitMeasure } = await api.get('api/product/unit_measure')
+                setUnitMeasures(unitMeasure)
+            } catch (error) {
+                console.log(error.response)
+            }
+        }
+
+        loadUnitMeasure()
     }, [])
+
+    function renderUnitMeaseure() {
+        return (
+            <>
+                {unitMeasures.map(el => {
+                    return (
+                        <option key={`unitMeaseures${el.id}`} value={el.id}>{el.name} - {el.description}</option>
+                    )
+                })}
+            </>
+        )
+    }
     return (
         <>
             <Head>
@@ -147,7 +216,7 @@ export default function productManagement() {
                         <div className={`flex flex-col items-center justify-center`}>
                             <h2 className="text-center text-3xl font-extrabold text-black">Cadastro de produto</h2>
                         </div>
-                        <form className="mt-8 space-y-6">
+                        <form className="mt-8 space-y-6" onSubmit={handleSubmit(handleProductRegister)}>
                             <input type="hidden" name="remember" defaultValue="true" />
                             <div className="rounded-md shadow-sm -space-y-px">
                                 <div className="flex flex-col mt-4">
@@ -156,6 +225,7 @@ export default function productManagement() {
                                         type="text"
                                         required
                                         placeholder="Nome do Produto"
+                                        {...register('productName')}
                                         id="productName"
                                         name="productName"
                                         className={`
@@ -172,6 +242,7 @@ export default function productManagement() {
                                     <textarea
                                         required
                                         placeholder="Descrição do Produto:"
+                                        {...register('productDescription')}
                                         id="productDescription"
                                         name="productDescription"
                                         rows={4}
@@ -189,8 +260,9 @@ export default function productManagement() {
                                     <select
                                         required
                                         placeholder="Un Medida"
-                                        id="unMedida"
-                                        name="unMedida"
+                                        {...register('productUnMedida')}
+                                        id="productUnMedida"
+                                        name="productUnMedida"
                                         className={`
                                             px-4 py-3 rounded-lg bg-gray-200 mt-2 text-black
                                             border focus:border-blue-500 focus:bg-white
@@ -198,9 +270,7 @@ export default function productManagement() {
                                         `}
                                     >
                                         <option value="">Selecione...</option>
-                                        <option value="Un">Un</option>
-                                        <option value="M">M</option>
-                                        <option value="cm">cm</option>
+                                        {renderUnitMeaseure()}
                                     </select>
                                 </div>
                             </div>
@@ -216,6 +286,7 @@ export default function productManagement() {
                                         type="text"
                                         placeholder="Valor Padrão"
                                         required
+                                        {...register('priceDefault')}
                                         id="priceDefault"
                                         name="priceDefault"
                                         className={`
@@ -234,6 +305,7 @@ export default function productManagement() {
                                         multiple={true}
                                         required
                                         placeholder="Foto do Produto:"
+                                        {...register('productPhotos')}
                                         id="productPhotos"
                                         name="productPhotos"
                                         className={`
@@ -315,9 +387,7 @@ export default function productManagement() {
                                         `}
                                     >
                                         <option value="">Selecione...</option>
-                                        <option value="UN">Un</option>
-                                        <option value="M">M</option>
-                                        <option value="cm">cm</option>
+                                        {renderUnitMeaseure()}
                                     </select>
                                 </div>
                             </div>

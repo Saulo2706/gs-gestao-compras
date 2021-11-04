@@ -16,6 +16,7 @@
     "daisyui": "^1.14.2",
     "datatables.net": "^1.11.3",
     "datatables.net-dt": "^1.11.3",
+    "form-data": "^4.0.0",
     "jquery": "^3.6.0",
     "next": "11.1.2",
     "nookies": "^2.5.2",

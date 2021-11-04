@@ -6,9 +6,7 @@ interface DataTableProps {
 export default function DataTable(props: DataTableProps) {
     return (
         <table id={props.id} className="display">
-            <tbody>
                 {props.children}
-            </tbody>
         </table>
     )
 }
