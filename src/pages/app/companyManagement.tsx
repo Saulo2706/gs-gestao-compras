@@ -44,8 +44,6 @@ export default function companyManagement() {
             foundedAt: data.foundedAt
         };
 
-        console.log(company)
-
         api.post('api/company/my', company).then(
             res => {
                 if (res.status == 200) {

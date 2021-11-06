@@ -37,22 +37,89 @@ export default function productManagement() {
     function handleProductRegister(data) {//POST REGISTRO DE PRODUTO
         const formData = new FormData();
         formData.append("name", data.productName)
-        formData.append("description",data.productDescription)
+        formData.append("description", data.productDescription)
         formData.append("price", data.priceDefault)
         formData.append("companyId", localStorage.getItem('company'))
         formData.append("unitMeasureId", data.productUnMedida)
-        formData.append("images[0]", data.productPhotos[0])
+        for (var i = 0; i < data.productPhotos.length; i++) {
+            formData.append("images[" + i + "]", data.productPhotos[i])
+        }
 
         const config = {
             headers: {
-              'content-type': 'multipart/form-data'
+                'content-type': 'multipart/form-data'
             }
-          }
+        }
 
         api.post('api/product/my', formData, config).then(
             res => {
                 if (res.status == 200) {
                     showNotify("Sucesso", "Cadastro realizado com sucesso :)", "success")
+                    Router.reload()
+                } else {
+                    showNotify("Alerta", res.data.message + " Codigo: " + res.status, "warning")
+                }
+            }
+        ).catch((error) => {
+            console.log(error)
+            console.log(error.response)
+            if (error.response) {
+                validateResponse(error.response.data.message)
+            } else {
+                validateResponse("erro não identifiado")
+            }
+        });
+
+    }
+
+    function handleProductEdit(data) {//PUT EDITAR DE PRODUTO
+
+        const formData = new FormData();
+        formData.append("name", (document.getElementById("productNameEdit") as HTMLInputElement).value)
+        formData.append("description", (document.getElementById("productDescriptionEdit") as HTMLInputElement).value)
+        formData.append("price", (document.getElementById("priceDefaultEdit") as HTMLInputElement).value)
+        formData.append("companyId", localStorage.getItem('company'))
+        formData.append("unitMeasureId", (document.getElementById("unMedidaEdit") as HTMLInputElement).value)
+
+        const put = {
+            name: (document.getElementById("productNameEdit") as HTMLInputElement).value,
+            description: (document.getElementById("productDescriptionEdit") as HTMLInputElement).value,
+            price: (document.getElementById("priceDefaultEdit") as HTMLInputElement).value,
+            unitMeasureId: (document.getElementById("unMedidaEdit") as HTMLInputElement).value,
+            companyId: localStorage.getItem('company')
+        }
+
+        const productId = (document.getElementById("idProductEdit") as HTMLInputElement).value
+
+        api.put('api/product/my/'+productId, formData).then(
+            res => {
+                if (res.status == 200) {
+                    showNotify("Sucesso", "Atualizado realizado com sucesso :)", "success")
+                    Router.reload()
+                } else {
+                    showNotify("Alerta", res.data.message + " Codigo: " + res.status, "warning")
+                }
+            }
+        ).catch((error) => {
+            console.log(error)
+            console.log(error.response)
+            if (error.response) {
+                validateResponse(error.response.data.message)
+            } else {
+                validateResponse("erro não identifiado")
+            }
+        });
+
+    }
+
+    function handleProductDelete(data) {//PUT EDITAR DE PRODUTO
+
+        const productId = (document.getElementById("id_Remove") as HTMLInputElement).value
+
+        api.delete('api/product/my/'+productId).then(
+            res => {
+                if (res.status == 200) {
+                    showNotify("Sucesso", "Deltado realizado com sucesso :)", "success")
                     Router.reload()
                 } else {
                     showNotify("Alerta", res.data.message + " Codigo: " + res.status, "warning")
@@ -89,11 +156,15 @@ export default function productManagement() {
                         dst.draw = 1;
                         dst.recordsTotal = src.page.totalElements;
                         dst.recordsFiltered = src.page.totalElements;
-                        src._embedded.productVOList.forEach(el => {
-                            el.unitMeasure = el.unitMeasure.name;
-                            el.unitMeasureId = el.id;
-                            dst.data.push(el)
-                        });
+                        try {
+                            src._embedded.productVOList.forEach(el => {
+                                el.unitMeasureName = el.unitMeasure.name;
+                                el.unitMeasureId = el.unitMeasure.id;
+                                dst.data.push(el)
+                            });
+                        } catch {
+                            dst.data = []
+                        }
 
                         return dst.data;
                     },
@@ -115,7 +186,9 @@ export default function productManagement() {
                 columns: [
                     { data: "id" },
                     { data: "name" },
-                    { data: "unitMeasure" },
+                    { data: "description" },
+                    { data: "price" },
+                    { data: "unitMeasureName", visible: false },
                     { data: "unitMeasureId", visible: false }
                 ],
                 scrollY: "300px",
@@ -138,13 +211,16 @@ export default function productManagement() {
             $('#editProduct').on('click', function () {
                 let product = table.row('.selected').child(1).data();
                 $('#productNameEdit').val(product.name);
+                $('#productDescriptionEdit').val(product.description);
+                $('#priceDefaultEdit').val(product.price);
                 $('#unMedidaEdit').val(product.unitMeasureId);
+                $('#idProductEdit').val(product.id);
 
             });
 
             $('#removeProduct').on('click', function () {
                 let product = table.row('.selected').child(1).data();
-                $('#id_Remove').val(product.name);
+                $('#id_Remove').val(product.id);
                 $("div#remove h2").html("Deseja mesmo remover o produto " + product.name)
 
             });
@@ -202,7 +278,8 @@ export default function productManagement() {
                                 <tr>
                                     <th>Id</th>
                                     <th>Nome</th>
-                                    <th>Un Medida</th>
+                                    <th>Descrição</th>
+                                    <th>Preço padrão</th>
                                 </tr>
                             </thead>
                         </DataTable>
@@ -283,10 +360,11 @@ export default function productManagement() {
                                         </div>
                                     </div>
                                     <input
-                                        type="text"
-                                        placeholder="Valor Padrão"
-                                        required
                                         {...register('priceDefault')}
+                                        type="number"
+                                        placeholder="Valor Padrão"
+                                        min="0"
+                                        required
                                         id="priceDefault"
                                         name="priceDefault"
                                         className={`
@@ -336,8 +414,10 @@ export default function productManagement() {
                         <div className={`flex flex-col items-center justify-center`}>
                             <h2 className="text-center text-3xl font-extrabold text-black">Editar produto</h2>
                         </div>
-                        <form className="mt-8 space-y-6">
+                        <form className="mt-8 space-y-6" onSubmit={handleSubmit(handleProductEdit)}>
                             <input type="hidden" name="remember" defaultValue="true" />
+                            <input type="hidden" name="idProductEdit" id="idProductEdit" {...register('idProductEdit')} />
+
                             <div className="rounded-md shadow-sm -space-y-px">
                                 <div className="flex flex-col mt-4">
                                     <label className={`text-black`}>Nome do Produto:</label>
@@ -345,6 +425,7 @@ export default function productManagement() {
                                         type="text"
                                         required
                                         placeholder="Nome do Produto"
+                                        {...register('productNameEdit')}
                                         id="productNameEdit"
                                         name="productNameEdit"
                                         className={`
@@ -361,6 +442,7 @@ export default function productManagement() {
                                     <textarea
                                         required
                                         placeholder="Descrição do Produto:"
+                                        {...register('productDescriptionEdit')}
                                         id="productDescriptionEdit"
                                         name="productDescriptionEdit"
                                         rows={4}
@@ -378,6 +460,7 @@ export default function productManagement() {
                                     <select
                                         required
                                         placeholder="Un Medida"
+                                        {...register('unMedidaEdit')}
                                         id="unMedidaEdit"
                                         name="unMedidaEdit"
                                         className={`
@@ -404,25 +487,8 @@ export default function productManagement() {
                                         placeholder="Valor Padrão"
                                         required
                                         id="priceDefaultEdit"
-                                        name="unMedidaEdit"
-                                        className={`
-                                            px-4 py-3 rounded-lg bg-gray-200 mt-2 text-black
-                                            border focus:border-blue-500 focus:bg-white
-                                            focus:outline-none
-                                        `}
-                                    />
-                                </div>
-                            </div>
-                            <div className="rounded-md shadow-sm -space-y-px">
-                                <div className="flex flex-col mt-4">
-                                    <label className={`text-black`}>Fotos do Produto:</label>
-                                    <input
-                                        type="file"
-                                        multiple={true}
-                                        required
-                                        placeholder="Foto do Produto:"
-                                        id="productPhotosEdit"
-                                        name="productPhotosEdit"
+                                        {...register('priceDefaultEdit')}
+                                        name="priceDefaultEdit"
                                         className={`
                                             px-4 py-3 rounded-lg bg-gray-200 mt-2 text-black
                                             border focus:border-blue-500 focus:bg-white
@@ -451,9 +517,9 @@ export default function productManagement() {
                         <div id="remove" className={`flex flex-col items-center justify-center`}>
                             <h2 className="text-center text-3xl font-extrabold text-black"></h2>
                         </div>
-                        <form className="mt-8 space-y-6">
+                        <form className="mt-8 space-y-6" onSubmit={handleSubmit(handleProductDelete)}>
                             <input type="hidden" name="remember" defaultValue="true" />
-                            <input type="hidden" name="id_Remove" />
+                            <input type="hidden" name="id_Remove" id="id_Remove" />
 
                             <div className="mt-5">
                                 <button
