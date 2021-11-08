@@ -9,11 +9,11 @@ import $ from 'jquery';
 import { useEffect } from "react";
 import DataTable from "../../components/template/DataTable";
 
-export default function buyers() {
+export default function partnersProviders() {
 
     useEffect(() => {
         $(document).ready(function () {
-            $('#buyers').DataTable({
+            $('#partners').DataTable({
                 language: {
                     "url": '../api/dataTableTranslate'
                 },
@@ -23,11 +23,8 @@ export default function buyers() {
                 ],
                 iDisplayLength: 25,
                 columns: [
-                    { title: "Produto" },
-                    { title: "Data de compra" },
-                    { title: "Quantidade" },
-                    { title: "Valor" },
-                    { title: "Ação" }
+                    { title: "Empresa" },
+                    { title: "CNPJ" }
                 ],
                 scrollY: "300px",
             });
@@ -37,16 +34,16 @@ export default function buyers() {
     return (
         <>
             <Head>
-                <title>Compradores Parceiros</title>
+                <title>Parceiros</title>
             </Head>
             <Layout>
                 <div>
                     <div className={`flex flex-row items-center justify-center`}>
-                        <h2 className="text-center text-3xl font-extrabold">Compradores Parceiros</h2>
+                        <h2 className="text-center text-3xl font-extrabold">Parceiros</h2>
                     </div>
                     <br />
                     <div className="bg-gray-200 mt-3 p-2 w-screen max-w-screen-md m-auto rounded-sm dark:text-gray-800">
-                        <DataTable id="buyers">
+                        <DataTable id="partners">
                             
                         </DataTable>
                     </div>

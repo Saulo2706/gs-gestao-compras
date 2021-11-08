@@ -24,7 +24,7 @@ export default function SideBar() {
                         <NavItem href="/app/productManagement" texto="Produtos" />
                     </li>
                     <li>
-                        <NavItem href="/app/buyers" texto="Clientes" />
+                        <NavItem href="/app/partners" texto="Parceiros" />
                     </li>
                     <li>
                         <NavItem href="/app/companyManagement" texto="Suas Empresas" />
@@ -44,7 +44,7 @@ export default function SideBar() {
                         <NavItem href="/app/budgets" texto="Orçamentos" />
                     </li>
                     <li>
-                        <NavItem href="/app/partnersProviders" texto="Fornecedores Parceiros" />
+                        <NavItem href="/app/partners" texto="Parceiros" />
                     </li>
                     <li>
                         <NavItem href="/app/companyManagement" texto="Suas Empresas" />

@@ -10,7 +10,7 @@ export default function Index() {
   </Head>
   return (
     <>
-      <h1>INDEX</h1>
+      
     </>
   )
 }

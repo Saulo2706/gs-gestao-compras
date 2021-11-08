@@ -3,6 +3,7 @@ import { CompanyIcon } from "../icons";
 import React, { useEffect, useState } from "react";
 import api from '../../services/api';
 import Router from "next/router";
+import $ from 'jquery';
 
 interface ICompanyes {
     createdAt: string;
@@ -29,34 +30,49 @@ export default function ButtonAlterCompany() {
         }
 
         loadCompany()
-
     }, [])
 
-    function alterCompany(newCompany) {
-        localStorage.setItem('company', newCompany)
-        Router.reload()
+    function myFunction(newCompany) {
+        var old_company = localStorage.getItem('company')
+        if (old_company == newCompany) {
+            $('#licompany' + newCompany).css("background-color", "rgba(209, 213, 219, var(--tw-bg-opacity))");
+        } else {
+            localStorage.setItem('company', newCompany)
+            $('#licompany' + newCompany).css("background-color", "rgba(209, 213, 219, var(--tw-bg-opacity))");
+            $('#licompany' + old_company).css("background-color", "");
+            if (Router.pathname == "/app/productManagement") {
+                Router.reload()
+            }
+        }
+
     }
 
     function renderCompanyes() {
         return (
             companyes.map(company => {
-                if (company.id == localStorage.getItem('company')) {
+                if(company.id == localStorage.getItem('company')){
                     return (
                         <>
-                            <li key={`1${company.id}`} className="bg-gray-300 hover:bg-gray-200 rounded-box" onClick={() => alterCompany(company.id)} >
-                                <a href="#">{company.name}</a>
+                            <li key={`licompany${company.id}`} style={{ backgroundColor: 'rgba(209, 213, 219, var(--tw-bg-opacity))' }} id={`licompany${company.id}`} className="hover:bg-gray-200 rounded-box " onClick={() => myFunction(company.id)} >
+                                <a>{company.name}</a>
                             </li>
                         </>
                     )
-                } else {
+                }else{
                     return (
-                        <li key={`2${company.id}`} className="hover:bg-gray-200 rounded-box" onClick={() => alterCompany(company.id)} >
-                            <a href="">{company.name}</a>
-                        </li>
+                        <>
+                            <li key={`licompany${company.id}`} id={`licompany${company.id}`} className="hover:bg-gray-200 rounded-box " onClick={() => myFunction(company.id)} >
+                                <a>{company.name}</a>
+                            </li>
+                        </>
                     )
                 }
+
             })
+
         )
+
+
     }
 
     return (
