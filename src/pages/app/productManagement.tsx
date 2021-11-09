@@ -91,7 +91,7 @@ export default function productManagement() {
 
         const productId = (document.getElementById("idProductEdit") as HTMLInputElement).value
 
-        api.put('api/product/my/'+productId, formData).then(
+        api.put('api/product/my/' + productId, formData).then(
             res => {
                 if (res.status == 200) {
                     showNotify("Sucesso", "Atualizado realizado com sucesso :)", "success")
@@ -116,7 +116,7 @@ export default function productManagement() {
 
         const productId = (document.getElementById("id_Remove") as HTMLInputElement).value
 
-        api.delete('api/product/my/'+productId).then(
+        api.delete('api/product/my/' + productId).then(
             res => {
                 if (res.status == 200) {
                     showNotify("Sucesso", "Deltado realizado com sucesso :)", "success")
@@ -141,59 +141,79 @@ export default function productManagement() {
         $(document).ready(function () {
             $('#editProduct').hide();
             $('#removeProduct').hide();
+            if (localStorage.getItem('company') != null) {
+                var table = $('#products').DataTable({
+                    destroy: true,
+                    //processing: true,
+                    //serverSide: true,
+                    ajax: {
+                        url: baseUrl + "/api/product/my/company/" + localStorage.getItem('company'),
+                        cache: true,
+                        type: "GET",
+                        datatype: 'json',
+                        dataSrc: function (src) {
+                            let dst = { draw: 0, recordsTotal: 0, recordsFiltered: 0, data: [] };
+                            dst.draw = 1;
+                            dst.recordsTotal = src.page.totalElements;
+                            dst.recordsFiltered = src.page.totalElements;
+                            try {
+                                src._embedded.productVOList.forEach(el => {
+                                    el.unitMeasureName = el.unitMeasure.name;
+                                    el.unitMeasureId = el.unitMeasure.id;
+                                    dst.data.push(el)
+                                });
+                            } catch {
+                                dst.data = []
+                            }
 
-            var table = $('#products').DataTable({
-                destroy: true,
-                //processing: true,
-                //serverSide: true,
-                ajax: {
-                    url: baseUrl + "/api/product/my/company/" + localStorage.getItem('company'),
-                    cache: true,
-                    type: "GET",
-                    datatype: 'json',
-                    dataSrc: function (src) {
-                        let dst = { draw: 0, recordsTotal: 0, recordsFiltered: 0, data: [] };
-                        dst.draw = 1;
-                        dst.recordsTotal = src.page.totalElements;
-                        dst.recordsFiltered = src.page.totalElements;
-                        try {
-                            src._embedded.productVOList.forEach(el => {
-                                el.unitMeasureName = el.unitMeasure.name;
-                                el.unitMeasureId = el.unitMeasure.id;
-                                dst.data.push(el)
-                            });
-                        } catch {
-                            dst.data = []
+                            return dst.data;
+                        },
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        error: function (xhr) {
+                            console.log("Erro " + xhr.status, xhr.responseText, true);
                         }
+                    },
+                    language: {
+                        "url": '../api/dataTableTranslate'
+                    },
+                    aLengthMenu: [
+                        [25, 50, 100],
+                        [25, 50, 100]
+                    ],
+                    iDisplayLength: 25,
+                    columns: [
+                        { data: "id" },
+                        { data: "name" },
+                        { data: "description" },
+                        { data: "price" },
+                        { data: "unitMeasureName", visible: false },
+                        { data: "unitMeasureId", visible: false }
+                    ],
+                    scrollY: "300px",
+                    stateSave: true,
+                });
+            } else {
+                var table = $('#products').DataTable({
+                    destroy: true,
+                    //processing: true,
+                    //serverSide: true,
 
-                        return dst.data;
+                    language: {
+                        "url": '../api/dataTableTranslate'
                     },
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    error: function (xhr) {
-                        console.log("Erro " + xhr.status, xhr.responseText, true);
-                    }
-                },
-                language: {
-                    "url": '../api/dataTableTranslate'
-                },
-                aLengthMenu: [
-                    [25, 50, 100],
-                    [25, 50, 100]
-                ],
-                iDisplayLength: 25,
-                columns: [
-                    { data: "id" },
-                    { data: "name" },
-                    { data: "description" },
-                    { data: "price" },
-                    { data: "unitMeasureName", visible: false },
-                    { data: "unitMeasureId", visible: false }
-                ],
-                scrollY: "300px",
-                stateSave: true,
-            });
+                    aLengthMenu: [
+                        [25, 50, 100],
+                        [25, 50, 100]
+                    ],
+                    iDisplayLength: 25,
+
+                    scrollY: "300px",
+                    stateSave: true,
+                });
+            }
+
 
             $('#products tbody').on('click', 'tr', function () {
                 if ($(this).hasClass('selected')) {
