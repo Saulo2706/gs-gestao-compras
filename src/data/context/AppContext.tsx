@@ -1,3 +1,4 @@
+import Router from "next/router";
 import { createContext, useEffect, useState } from "react";
 interface AppContextProps{
     theme: string
@@ -26,12 +27,18 @@ export function AppProvider(props){
         const newTheme = theme === '' ? 'dark' : ''
         setTheme(newTheme)
         localStorage.setItem('theme',newTheme)
+        if (Router.pathname == "/app/partners" ) {
+            Router.reload()
+        }
     }
     
     function alterMode(){
         const newMode = mode === '' ? 'provider' : ''
         setMode(newMode)
         localStorage.setItem('mode',newMode)
+        if (Router.pathname == "/app/partners" ) {
+            Router.reload()
+        }
     }
 
     useEffect(() =>{

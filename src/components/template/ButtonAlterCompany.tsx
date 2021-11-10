@@ -40,7 +40,7 @@ export default function ButtonAlterCompany() {
             localStorage.setItem('company', newCompany)
             $('#licompany' + newCompany).css("background-color", "rgba(209, 213, 219, var(--tw-bg-opacity))");
             $('#licompany' + old_company).css("background-color", "");
-            if (Router.pathname == "/app/productManagement") {
+            if (Router.pathname == "/app/productManagement" || Router.pathname == "/app/partners" ) {
                 Router.reload()
             }
         }
