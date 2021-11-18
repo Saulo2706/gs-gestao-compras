@@ -1,21 +1,18 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 import Layout from "../../components/template/Layout";
 import Head from 'next/head'
 import { QuestionIcon } from "../../components/icons";
 import { default as FormData } from "form-data";
-import InputMask from 'react-input-mask';
 
 import 'jquery/dist/jquery.min.js';
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
-import $ from 'jquery';
 
+import { initialJquery} from "../../functions/tableProduct";
 import api from '../../services/api';
 import { validateResponse } from "../../functions/validateResponse";
 import { useEffect, useState } from "react";
 
-import useAppData from "../../data/hook/useAppData";
 import { showNotify } from "../../functions/showNotify";
 import { useForm } from 'react-hook-form'
 import Router from "next/router";
@@ -32,7 +29,6 @@ export default function productManagement() {
 
     const [unitMeasures, setUnitMeasures] = useState<IUnitMeasures[]>([]);
     const { register, handleSubmit } = useForm();
-    const { baseUrl } = useAppData()
 
     function handleProductRegister(data) {//POST REGISTRO DE PRODUTO
         const formData = new FormData();
@@ -138,113 +134,8 @@ export default function productManagement() {
     }
 
     useEffect(() => {
-        $(document).ready(function () {
-            $('#editProduct').hide();
-            $('#removeProduct').hide();
-            if (localStorage.getItem('company') != null) {
-                var table = $('#products').DataTable({
-                    destroy: true,
-                    //processing: true,
-                    //serverSide: true,
-                    ajax: {
-                        url: baseUrl + "/api/product/my/company/" + localStorage.getItem('company'),
-                        cache: true,
-                        type: "GET",
-                        datatype: 'json',
-                        dataSrc: function (src) {
-                            let dst = { draw: 0, recordsTotal: 0, recordsFiltered: 0, data: [] };
-                            dst.draw = 1;
-                            dst.recordsTotal = src.page.totalElements;
-                            dst.recordsFiltered = src.page.totalElements;
-                            try {
-                                src._embedded.productVOList.forEach(el => {
-                                    el.unitMeasureName = el.unitMeasure.name;
-                                    el.unitMeasureId = el.unitMeasure.id;
-                                    dst.data.push(el)
-                                });
-                            } catch {
-                                dst.data = []
-                            }
-
-                            return dst.data;
-                        },
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        error: function (xhr) {
-                            console.log("Erro " + xhr.status, xhr.responseText, true);
-                        }
-                    },
-                    language: {
-                        "url": '../api/dataTableTranslate'
-                    },
-                    aLengthMenu: [
-                        [25, 50, 100],
-                        [25, 50, 100]
-                    ],
-                    iDisplayLength: 25,
-                    columns: [
-                        { data: "id" },
-                        { data: "name" },
-                        { data: "description" },
-                        { data: "price" },
-                        { data: "unitMeasureName", visible: false },
-                        { data: "unitMeasureId", visible: false }
-                    ],
-                    scrollY: "300px",
-                    stateSave: true,
-                });
-            } else {
-                var table = $('#products').DataTable({
-                    destroy: true,
-                    //processing: true,
-                    //serverSide: true,
-
-                    language: {
-                        "url": '../api/dataTableTranslate'
-                    },
-                    aLengthMenu: [
-                        [25, 50, 100],
-                        [25, 50, 100]
-                    ],
-                    iDisplayLength: 25,
-
-                    scrollY: "300px",
-                    stateSave: true,
-                });
-            }
-
-
-            $('#products tbody').on('click', 'tr', function () {
-                if ($(this).hasClass('selected')) {
-                    $(this).removeClass('selected');
-                    $('#editProduct').hide();
-                    $('#removeProduct').hide();
-                } else {
-                    table.$('tr.selected').removeClass('selected');
-                    $(this).addClass('selected');
-                    $('#editProduct').show();
-                    $('#removeProduct').show();
-                }
-            });
-
-            $('#editProduct').on('click', function () {
-                let product = table.row('.selected').child(1).data();
-                $('#productNameEdit').val(product.name);
-                $('#productDescriptionEdit').val(product.description);
-                $('#priceDefaultEdit').val(product.price);
-                $('#unMedidaEdit').val(product.unitMeasureId);
-                $('#idProductEdit').val(product.id);
-
-            });
-
-            $('#removeProduct').on('click', function () {
-                let product = table.row('.selected').child(1).data();
-                $('#id_Remove').val(product.id);
-                $("div#remove h2").html("Deseja mesmo remover o produto " + product.name)
-
-            });
-        });
+       
+        initialJquery()
 
         async function loadUnitMeasure() {
             try {

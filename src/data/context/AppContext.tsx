@@ -5,7 +5,6 @@ interface AppContextProps{
     alterTheme?: () => void
     mode: string
     alterMode?: () => void
-    baseUrl: string
 }
 
 const AppContext = createContext<AppContextProps>({
@@ -13,7 +12,6 @@ const AppContext = createContext<AppContextProps>({
     alterTheme: null,
     mode: null,
     alterMode: null,
-    baseUrl: null
     
 })
 
@@ -21,24 +19,17 @@ export function AppProvider(props){
     const [theme, setTheme] = useState('dark')
     const [mode, setMode] = useState('provider')
 
-    const baseUrl = 'https://25.1.175.3:8443';
 
     function alterTheme(){
         const newTheme = theme === '' ? 'dark' : ''
         setTheme(newTheme)
         localStorage.setItem('theme',newTheme)
-        if (Router.pathname == "/app/partners" ) {
-            Router.reload()
-        }
     }
     
     function alterMode(){
         const newMode = mode === '' ? 'provider' : ''
         setMode(newMode)
         localStorage.setItem('mode',newMode)
-        if (Router.pathname == "/app/partners" ) {
-            Router.reload()
-        }
     }
 
     useEffect(() =>{
@@ -54,7 +45,6 @@ export function AppProvider(props){
             alterTheme,
             mode,
             alterMode,
-            baseUrl,
         }}>
             {props.children}
         </AppContext.Provider>

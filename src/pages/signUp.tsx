@@ -9,6 +9,8 @@ export default function Signup() {
     const { register, handleSubmit } = useForm();
     const { signUp } = useContext(AuthContext)
 
+
+
     async function handleSignUp(data) {
         if (data.email != data.re_email) {
             showNotify("Erro", "Emails não conferem!", "danger")

@@ -38,6 +38,9 @@ export default function SideBar() {
                         <NavItem href="/app" texto="Inicio" />
                     </li>
                     <li>
+                        <NavItem href="/app/products" texto="Produtos" />
+                    </li>                    
+                    <li>
                         <NavItem href="/app/purchases" texto="Compras" />
                     </li>
                     <li>
