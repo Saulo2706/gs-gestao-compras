@@ -230,6 +230,7 @@ export default function productManagement() {
                                     <textarea
                                         required
                                         placeholder="Descrição do Produto:"
+                                        maxLength={600}
                                         {...register('productDescription')}
                                         id="productDescription"
                                         name="productDescription"
@@ -353,6 +354,7 @@ export default function productManagement() {
                                     <textarea
                                         required
                                         placeholder="Descrição do Produto:"
+                                        maxLength={600}
                                         {...register('productDescriptionEdit')}
                                         id="productDescriptionEdit"
                                         name="productDescriptionEdit"

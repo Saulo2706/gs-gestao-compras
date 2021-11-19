@@ -30,6 +30,10 @@ export function AppProvider(props){
         const newMode = mode === '' ? 'provider' : ''
         setMode(newMode)
         localStorage.setItem('mode',newMode)
+
+        if (Router.pathname == "/app/products" || Router.pathname == "/app/productManagement") {
+            Router.push("/app")
+        }
     }
 
     useEffect(() =>{

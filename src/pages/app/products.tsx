@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 import Layout from "../../components/template/Layout";
 import Head from 'next/head'
@@ -39,16 +40,15 @@ export default function products() {
                             <div className="flex flex-wrap -mx-1 lg:-mx-4">
                                 {products.map(el => {
                                     return (
-                                        //console.log(el.id + " " + el.name + " " + el.description + " " + el.images[0].id + " " +el.company.toCompanyName)
                                         <>
                                             <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
                                                 <article className="bg-gray-100 overflow-hidden rounded-lg shadow-lg">
-                                                    <a href="#">
+                                                    <a href={`product/${el.id}`}>
                                                         <img alt="productImage" className="h-60 w-96" src={`${process.env.baseURL}/api/product/image/${el.images[0].id}`} />
                                                     </a>
                                                     <header className=" flex items-center justify-between leading-tight p-2 md:p-4">
                                                         <h1 className="text-lg">
-                                                            <a className="no-underline hover:underline text-black" href="#">
+                                                            <a className="no-underline hover:underline text-black" href={`product/${el.id}`}>
                                                                 {el.name}
                                                             </a>
                                                         </h1>
@@ -59,7 +59,6 @@ export default function products() {
                                                                 {el.company.toCompanyName} - {el.company.toCompanyId}
                                                             </p>
                                                         </label>
-
                                                     </footer>
                                                 </article>
                                             </div>
