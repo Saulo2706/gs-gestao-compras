@@ -4,7 +4,7 @@ import useAppData from "../../data/hook/useAppData";
 import AvatarUser from "./AvatarUser";
 import React, { useEffect, useState } from "react";
 import Logo from "./Logo";
-import { MenuIcon } from "../icons";
+import { IconCart, MenuIcon } from "../icons";
 import Link from 'next/link'
 import 'jquery/dist/jquery.min.js';
 import ButtonAlterTheme from "./ButtonAlterTheme";
@@ -40,9 +40,16 @@ export default function NavBar(props) {
                     </div>
                 </div>
                 <div className="navbar-end">
-                    <ButtonAlterMode mode={mode} alterMode={alterMode}/>
+                    <ButtonAlterMode mode={mode} alterMode={alterMode} />
                     <ButtonAlterTheme theme={theme} alterTheme={alterTheme} />
-                    <ButtonAlterCompany/>
+                    <ButtonAlterCompany />
+                    <div className={`
+                        flex items-center justify-center  cursor-pointer
+                        bg-black text-yellow-300 w-6 h-6 rounded-full
+                        ml-2
+                    `}>
+                        <a href="/app/cart">{IconCart(5)}</a>
+                    </div>
                     <AvatarUser className="ml-4 mr-4" />
                 </div>
             </div >

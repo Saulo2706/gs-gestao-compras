@@ -40,8 +40,12 @@ export default function ButtonAlterCompany() {
             localStorage.setItem('company', newCompany)
             $('#licompany' + newCompany).css("background-color", "rgba(209, 213, 219, var(--tw-bg-opacity))");
             $('#licompany' + old_company).css("background-color", "");
-            if (Router.pathname == "/app/productManagement" || Router.pathname == "/app/partners" || Router.pathname == "/app/products" ) {
+            localStorage.removeItem('products');
+            if (Router.pathname == "/app/productManagement" || Router.pathname == "/app/partners" || Router.pathname == "/app/products" || Router.pathname == "/app/budgets" || Router.pathname == "/app/cart") {
                 Router.reload()
+            }else{
+                console.log("entrei no else "+ Router.pathname)
+
             }
         }
 

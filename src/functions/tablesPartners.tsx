@@ -18,8 +18,8 @@ export function initialJquery() {
         var id3 = 0;
 
         if (localStorage.getItem('company') != null) {
-            var table = instance("/api/company_partner/company/" + localStorage.getItem('company'), "GET", "partners", [{ data: "toCompanyId" },{data: "toCompanyName" },{ data: "isAccepted", visible: false }], "")
-            var add = instance("/api/company_partner/company/" + localStorage.getItem('company') + "/excepts_my", "GET", "add", [{ data: "toCompanyId" },{data: "toCompanyName" },{ data: "isAccepted", visible: false }], "")
+            var table = instance("/api/company_partner/company/" + localStorage.getItem('company'), "GET", "partners", [{ data: "id" },{data: "name" }], "")
+            var add = instance("/api/company_partner/company/" + localStorage.getItem('company') + "/excepts_my", "GET", "add", [{ data: "id" },{data: "name" }], "")
 
         } else {
             var table = simpleInstance("partners")
@@ -38,7 +38,7 @@ export function initialJquery() {
 
         $('#sendInvite').on('click', function () {
             let partner = add.row('.selected').child(1).data();
-            api.post('api/company_partner/company/' + localStorage.getItem('company') + '/to/' + partner.toCompanyId).then(
+            api.post('api/company_partner/company/' + localStorage.getItem('company') + '/to/' + partner.id).then(
                 res => {
                     if (res.status == 200) {
                         showNotify("Sucesso", "Pedido enviado com sucesso :)", "success")
@@ -61,7 +61,7 @@ export function initialJquery() {
 
         $('#remPartnerSended').on('click', function () {
             let partner = tableSended.row('.selected').child(1).data();
-            api.delete('api/company_partner/company/' + localStorage.getItem('company') + '/to/' + partner.toCompanyId).then(
+            api.delete('api/company_partner/company/' + localStorage.getItem('company') + '/to/' + partner.id).then(
                 res => {
                     if (res.status == 200) {
                         showNotify("Sucesso", "Pedido cancelado com sucesso :)", "success")
@@ -84,7 +84,7 @@ export function initialJquery() {
 
         $('#addPartnerReceived').on('click', function () {
             let partner = tableReceived.row('.selected').child(1).data();
-            api.post('api/company_partner/company/' + partner.toCompanyId + '/to/' + localStorage.getItem('company') + "/accept").then(
+            api.post('api/company_partner/company/' + partner.id + '/to/' + localStorage.getItem('company') + "/accept").then(
                 res => {
                     if (res.status == 200) {
                         showNotify("Sucesso", "Parceiro adicionado com sucesso :)", "success")
@@ -106,7 +106,7 @@ export function initialJquery() {
 
         $('#remPartnerReceived').on('click', function () {
             let partner = tableReceived.row('.selected').child(1).data();
-            api.delete('api/company_partner/company/' + partner.toCompanyId + '/to/' + localStorage.getItem('company')).then(
+            api.delete('api/company_partner/company/' + partner.id + '/to/' + localStorage.getItem('company')).then(
                 res => {
                     if (res.status == 200) {
                         showNotify("Sucesso", "Parceiro recusado com sucesso :)", "success")
@@ -130,7 +130,7 @@ export function initialJquery() {
             if (localStorage.getItem('company') != null) {
                 if (id2 == 0) {
                     id2 = 1;
-                    tableReceived = instance("/api/company_partner/company/" + localStorage.getItem('company') + "/pending_for_me", "GET", "received", [{ data: "toCompanyId" },{data: "toCompanyName" },{ data: "isAccepted", visible: false }], "")
+                    tableReceived = instance("/api/company_partner/company/" + localStorage.getItem('company') + "/pending_for_me", "GET", "received", [{ data: "id" },{data: "name" }], "")
 
                     $('#received tbody').on('click', 'tr', function () {
                         if ($(this).hasClass('selected')) {
@@ -170,7 +170,7 @@ export function initialJquery() {
             if (localStorage.getItem('company') != null) {
                 if (id3 == 0) {
                     id3 = 1;
-                    tableSended = instance("/api/company_partner/company/" + localStorage.getItem('company') + "/pending", "GET", "sended", [{ data: "toCompanyId" },{data: "toCompanyName" },{ data: "isAccepted", visible: false }], "")
+                    tableSended = instance("/api/company_partner/company/" + localStorage.getItem('company') + "/pending", "GET", "sended", [{ data: "id" },{data: "name" }], "")
 
                     $('#sended tbody').on('click', 'tr', function () {
                         if ($(this).hasClass('selected')) {

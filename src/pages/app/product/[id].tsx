@@ -3,8 +3,9 @@
 import Layout from "../../../components/template/Layout";
 import Head from 'next/head'
 import api from '../../../services/api';
-import { useEffect, useState } from "react";
+import {useEffect, useState, useContext } from "react";
 import ImageGallery from 'react-image-gallery';
+import { showNotify } from "../../../functions/showNotify";
 
 
 interface iProduct {
@@ -33,7 +34,6 @@ export default function product({ id }) {
                 const { data: productItem } = await api.get('api/product/' + id + '/company/' + localStorage.getItem('company'))
                 setProductItem(productItem)
                 setImagesItem(productItem.images)
-                console.log(productItem)
             } catch (error) {
                 console.log(error.response)
             }
@@ -55,6 +55,22 @@ export default function product({ id }) {
         return <ImageGallery items={images} showFullscreenButton={false} showPlayButton={false} />;
     }
 
+    function addItemtoCart() {
+        let qtd = (document.getElementById("qtd") as HTMLInputElement).value
+        let obs = (document.getElementById("obs") as HTMLInputElement).value
+        if(qtd.trim() != ""){
+            let products = [];
+            if (localStorage.getItem('products')) {
+                products = JSON.parse(localStorage.getItem('products'));
+            }
+            products.push({ 'id': id, 'qtd': qtd, 'obs': obs});
+            localStorage.setItem('products', JSON.stringify(products));
+            showNotify("Sucesso", "Item adicionado no carrinho com sucesso :)", "success")
+        }else{
+            showNotify("Erro", "Quantidade não informada", "danger")
+        }
+    }
+
     function renderProduct() {
         return (
             <>
@@ -69,10 +85,10 @@ export default function product({ id }) {
                         {renderImages()}
                     </div>
                     <div className="col-span-4">
+                        <b>Descrição: </b>
                         <p>
                             {productItem?.description}
                         </p>
-                        <b>Preço padrão: R$ {productItem?.price} / {productItem?.unitMeasure.name}</b>
                     </div>
                     <div className="col-span-2">
                         <b>Quantidade em: </b> {productItem?.unitMeasure.name}
@@ -105,7 +121,7 @@ export default function product({ id }) {
                     </div>
                     <div className="col-span-2 text-right mr-1">
                         <br />
-                        <button id="addCart" className="bg-blue-500 hover:bg-blue-700 btn btn-md">Adicionar ao Carrinho</button>
+                        <button id="addCart" onClick={() => addItemtoCart()} className="bg-blue-500 hover:bg-blue-700 btn btn-md">Adicionar ao Carrinho</button>
                     </div>
 
                 </div>

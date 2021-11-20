@@ -56,7 +56,7 @@ export default function products() {
                                                     <footer className="flex items-center justify-between leading-none p-2 md:p-4">
                                                         <label className="flex items-center no-underline text-black">
                                                             <p className="text-sm">
-                                                                {el.company.toCompanyName} - {el.company.toCompanyId}
+                                                                {el.company.name} - {el.company.id}
                                                             </p>
                                                         </label>
                                                     </footer>

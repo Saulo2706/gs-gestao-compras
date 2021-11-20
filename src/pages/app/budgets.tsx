@@ -6,31 +6,41 @@ import 'jquery/dist/jquery.min.js';
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 import $ from 'jquery';
+import { instance, simpleInstance } from "../../functions/instanceDatatableJq";
 import { useEffect } from "react";
 import DataTable from "../../components/template/DataTable";
+import Router from "next/router";
 
 export default function budgets() {
 
     useEffect(() => {
         $(document).ready(function () {
-            $('#budgets').DataTable({
-                language: {
-                    "url": '../api/dataTableTranslate'
-                },
-                aLengthMenu: [
-                    [25, 50, 100],
-                    [25, 50, 100]
-                ],
-                iDisplayLength: 25,
-                columns: [
-                    { title: "Produto" },
-                    { title: "Data de compra" },
-                    { title: "Quantidade" },
-                    { title: "Valor" },
-                    { title: "Ação" }
-                ],
-                scrollY: "300px",
+            var table = instance("/api/budget_request/my/company/" + localStorage.getItem('company'), "GET", "budgets",
+                [
+                    { data: "id" },
+                    { data: "description" },
+                    { data: "expiresOn" }
+                    //{ data: "itens.product.name"}
+                ], "")
+
+            $('#budgets tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                    $('#datail').attr("disabled", true);
+                } else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    $('#datail').removeAttr('disabled');
+                }
             });
+
+            $('#datail').on('click', function () {
+                let idBudget = table.row('.selected').child(1).data();
+                //console.log(idBudget.id)
+                Router.push('/app/budget/'+idBudget.id)
+    
+            });
+
         });
     }, [])
 
@@ -46,29 +56,25 @@ export default function budgets() {
                     </div>
                     <br />
                     <div className="bg-gray-200 mt-3 p-2 w-screen max-w-screen-md m-auto rounded-sm dark:text-gray-800">
+                        <div className="grid grid-cols-12 gap-4 p-2">
+                            <div className="col-span-6">
+                            
+                            </div>
+                            <div className="col-span-4 text-right">
+                            
+                            </div>
+                            <div className="col-span-2 text-right mr-1">
+                                <button id="datail" disabled className="bg-blue-500 hover:bg-blue-700 btn btn-sm">Detalhar</button>
+                            </div>
+                        </div>
                         <DataTable id="budgets">
-                            <tr>
-                                <td>Celular</td>
-                                <td>10/10/2021</td>
-                                <td>1</td>
-                                <td>R$ 900,00</td>
-                                <td><button
-                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    Detalhes
-                                </button></td>
-                            </tr>
-                            <tr>
-                                <td>Caneta</td>
-                                <td>14/10/2021</td>
-                                <td>5</td>
-                                <td>R$ 30,00</td>
-                                <td><button
-                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    Detalhes
-                                </button></td>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Descrição do Orçamento</th>
+                                    <th>Validade do Orçamento</th>
+                                </tr>
+                            </thead>
                         </DataTable>
                     </div>
                 </div>
