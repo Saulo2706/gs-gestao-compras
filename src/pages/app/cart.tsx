@@ -6,6 +6,9 @@ import Head from 'next/head'
 import api from '../../services/api';
 import { useEffect, useState } from "react";
 import Router from "next/router";
+import { Description } from "@headlessui/react/dist/components/description/description";
+import { showNotify } from "../../functions/showNotify";
+import { validateResponse } from "../../functions/validateResponse";
 
 interface iProduct {
     id: number;
@@ -28,9 +31,9 @@ export default function cart() {
         console.log("to aqui e o ID é:" + productId)
         let storageProducts = JSON.parse(localStorage.getItem('products'));
         let products = storageProducts.filter(product => product.id != productId);
-        if(products.length == 0){
+        if (products.length == 0) {
             localStorage.removeItem('products');
-        }else{
+        } else {
             localStorage.setItem('products', JSON.stringify(products));
         }
         Router.reload()
@@ -59,10 +62,10 @@ export default function cart() {
             <>
                 <div>
                     <div className="grid grid-cols-12 gap-4 p-2">
-                        <div className="col-span-1 w-44 h-44">
-                        </div>
                         <div className="col-span-2 w-44 h-44">
                             {renderImages(productItem?.images[0].id)}
+                        </div>
+                        <div className="col-span-1 w-44 h-44">
                             <h2 className="text-center text-2xl font-bold">{productItem?.name}</h2>
                         </div>
                         <div className="col-span-2">
@@ -76,7 +79,7 @@ export default function cart() {
                                 required
                                 id={`qtd${productItem?.id}`}
                                 name={`qtd${productItem?.id}`}
-                                value={qtd}
+                                defaultValue={qtd}
                                 className={`
                                     px-1 py-3 rounded-lg bg-gray-200 mb-2 text-black
                                     border focus:border-blue-500 focus:bg-white
@@ -90,7 +93,7 @@ export default function cart() {
                                 placeholder="Observações"
                                 id={`obs${productItem?.id}`}
                                 name={`obs${productItem?.id}`}
-                                value={obs}
+                                defaultValue={obs}
                                 rows={4}
                                 className={`
                                     px-1 py-3 rounded-lg bg-gray-200 mb-2 text-black
@@ -124,15 +127,102 @@ export default function cart() {
                     i++;
                 });
                 return (
-                    render
+                    <>
+                        {render}
+                        <br />
+                        <hr />
+                        <div>
+                            <div className="grid grid-cols-12 gap-4 p-2">
+                                <div className="col-span-5">
+                                    <b>Observações Gerais: </b>
+                                    <br />
+                                    <textarea
+                                        placeholder="Observações"
+                                        id={`description`}
+                                        name={`description`}
+                                        rows={4}
+                                        className={`
+                                    w-96 h-44 rounded-lg bg-gray-200 mb-2 text-black
+                                    border focus:border-blue-500 focus:bg-white
+                                    focus:outline-none
+                                `}
+                                    />
+                                </div>
+                                <div className="col-span-4">
+                                    <b>Data de expiração: </b>
+                                    <br />
+                                    <input
+                                        type="date"
+                                        required
+                                        placeholder="expires"
+                                        id="expiresOn"
+                                        name="expiresOn"
+                                        className={`
+                                px-4 py-3 rounded-lg bg-gray-200 mt-2 
+                                border focus:border-blue-500 focus:bg-white
+                                focus:outline-none
+                            `} />
+                                </div>
+                                <div className="col-span-2 text-left mr-1">
+                                    <br />
+                                    <button id="finishCart" onClick={() => finishCart()} className="bg-blue-500 hover:bg-blue-700 btn btn-md">Concluir Orçamento</button>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+
+                )
+            } else {
+                return (
+                    <>
+                        <h2 className="text-center text-3xl font-extrabold">Carrinho vazio!</h2>
+                    </>
                 )
             }
-        } else {
-            return (
-                <>
-                    <h2 className="text-center text-3xl font-extrabold">Carrinho vazio!</h2>
-                </>
-            )
+        }
+    }
+
+    function finishCart() {
+        if ((document.getElementById(`expiresOn`) as HTMLInputElement).value.trim() != "") {
+            let productsStorage = [];
+            productsStorage = JSON.parse(localStorage.getItem('products'));
+            const itens = []
+            productsStorage.forEach(el => {
+                itens.push({ product: { id: el.id }, quantity: (document.getElementById(`qtd${el.id}`) as HTMLInputElement).value, description: (document.getElementById(`obs${el.id}`) as HTMLInputElement).value })
+            });
+
+            const buyer = {
+                id: localStorage.getItem('company')
+            }
+
+            const budget = {
+                buyer: buyer,
+                itens: itens,
+                description: (document.getElementById(`description`) as HTMLInputElement).value,
+                expiresOn: (document.getElementById(`expiresOn`) as HTMLInputElement).value + "T00:00:00.000+00:00"
+            };
+
+            api.post('api/budget_request/my', budget).then(
+                res => {
+                    if (res.status == 200) {
+                        showNotify("Sucesso", "Orçamento realizado com sucesso :)", "success")
+                        localStorage.removeItem('products');
+                        Router.reload()
+                    } else {
+                        showNotify("Alerta", res.data.message + " Codigo: " + res.status, "warning")
+                    }
+                }
+            ).catch((error) => {
+                console.log(error)
+                console.log(error.response)
+                if (error.response) {
+                    validateResponse(error.response.data.message)
+                } else {
+                    validateResponse("erro não identifiado")
+                }
+            });
+        }else{
+            showNotify("Alerta","Data de expiração do orçamento não pode ficar em branco!", "warning")
         }
     }
 

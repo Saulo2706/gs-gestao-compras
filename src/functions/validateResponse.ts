@@ -17,6 +17,8 @@ export function validateResponse(message){
         showNotify("Erro", "Email ou Senha inválidos", "danger")
     }else if(message == "NON_HANDLED_ERROR"){
         showNotify("Erro", "Essa não! Erro desconhecido!", "danger")
+    }else if(message == "BUDGET_REQUEST_ITEM_QUANTITY_INVALID"){
+        showNotify("Erro", "Quantidade não pdoe ser decimal para o item UN/PC!", "danger")
     }else{
         showNotify("Erro", "Erro não identificado!", "danger")
     }

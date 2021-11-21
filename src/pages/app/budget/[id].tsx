@@ -24,6 +24,7 @@ interface iImagesProduct {
 }
 
 interface iItens {
+    length: number;
     id: number
     products: iProduct
     quantity: string
