@@ -4,6 +4,7 @@ import Layout from "../../components/template/Layout";
 import Head from 'next/head'
 import api from '../../services/api';
 import { useEffect, useState } from "react";
+import { MultiSelect } from "react-multi-select-component";
 
 interface iProducts {
     id: number;
@@ -15,6 +16,10 @@ interface iProducts {
 
 export default function products() {
     const [products, setProducts] = useState<iProducts[]>([]);
+    const [productsHTML, setProductsHTML] = useState([]);
+    const [selected, setSelected] = useState([]);
+
+    const options = [];
 
     useEffect(() => {
 
@@ -39,6 +44,14 @@ export default function products() {
                         <div className="container my-12 mx-auto px-4 md:px-12">
                             <div className="flex flex-wrap -mx-1 lg:-mx-4">
                                 {products.map(el => {
+                                    if (options.filter((el2) => el2.label == el.company.name).length == 0) {
+                                        options.push({ label: el.company.name, value: el.company.id })
+                                    }
+                                    /*if (selected.length == 0) {
+                                        setProductsHTML([
+                                            
+                                        ])
+                                    }*/
                                     return (
                                         <>
                                             <div className="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
@@ -90,8 +103,19 @@ export default function products() {
                     <div className={`flex flex-row items-center justify-center`}>
                         <h2 className="text-center text-3xl font-extrabold">Produtos de Parceiros</h2>
                     </div>
+                    <div>
+                        <h1>Filtrar Parceiro</h1>
+                        {<pre>{/*JSON.stringify(selected)*/}</pre>}
+                        <MultiSelect
+                            options={options}
+                            value={selected}
+                            onChange={setSelected}
+                            labelledBy="Select"
+                        />
+                    </div>
                     <br />
                     {renderProducts()}
+                    {/*productsHTML*/}
                 </div>
             </Layout>
         </>
