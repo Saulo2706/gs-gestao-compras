@@ -207,6 +207,7 @@ export function Tabs() {
     const [openTab, setOpenTab] = React.useState(1);
     return (
         <>
+        <div className="w-full">
             <ul
                 className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
                 role="tablist"
@@ -272,6 +273,7 @@ export function Tabs() {
                     </a>
                 </li>
             </ul>
+            </div>
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                 <div className={openTab === 1 ? "block p-2" : "hidden p-2"} id="link1">
                     <div className="grid grid-cols-12 gap-4 p-2">
