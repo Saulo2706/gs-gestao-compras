@@ -31,7 +31,7 @@ export function AppProvider(props){
         setMode(newMode)
         localStorage.setItem('mode',newMode)
 
-        if (Router.pathname == "/app/products" || Router.pathname == "/app/productManagement" || Router.pathname == "/app/budgets" || Router.pathname == "/app/purchaseOrders" || Router.pathname == "/app/budgetsOrders") {
+        if (Router.pathname == "/app/products" || Router.pathname == "/app/productManagement" || Router.pathname == "/app/budgets" || Router.pathname == "/app/purchases" || Router.pathname == "/app/budgetsOrders" || Router.pathname == "/app/sales") {
             Router.push("/app")
         }
     }

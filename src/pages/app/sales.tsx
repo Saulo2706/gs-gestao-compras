@@ -8,28 +8,51 @@ import "datatables.net-dt/css/jquery.dataTables.min.css"
 import $ from 'jquery';
 import { useEffect } from "react";
 import DataTable from "../../components/template/DataTable";
+import { instance } from "../../functions/instanceDatatableJq";
+import { parseISOLocal } from "../../functions/parseDate";
+import Router from "next/router";
 
 export default function sales() {
 
     useEffect(() => {
         $(document).ready(function () {
-            $('#sales').DataTable({
-                language: {
-                    "url": '../api/dataTableTranslate'
-                },
-                aLengthMenu: [
-                    [25, 50, 100],
-                    [25, 50, 100]
-                ],
-                iDisplayLength: 25,
-                columns: [
-                    { title: "Produto" },
-                    { title: "Data de compra" },
-                    { title: "Quantidade" },
-                    { title: "Valor" },
-                    { title: "Ação" }
-                ],
-                scrollY: "300px",
+            var table = instance("/api/budget_response/my/company/" + localStorage.getItem('company'), "GET", "sales",
+                [
+                    { data: "id" },
+                    { data: "budgetRequest.description" },
+                    { data: "buyedAt" }
+                ], function (src) {
+                    let dst = { draw: 0, recordsTotal: 0, recordsFiltered: 0, data: [] };
+                    dst.draw = 1;
+                    try {
+                        src.forEach(el => {
+                            if (el.buyedAt != undefined) {
+                                let date = parseISOLocal(el.buyedAt)
+                                el.buyedAt = ((date.getDate())) + "/" + ((date.getMonth() + 1)) + "/" + date.getFullYear();
+                                dst.data.push(el)
+                            }
+                        });
+                    } catch {
+                        dst.data = []
+                    } console.log(dst.data)
+                    return dst.data;
+                })
+
+            $('#sales tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                    $('#detail').attr("disabled", true);
+                } else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    $('#detail').removeAttr('disabled');
+                }
+            });
+
+            $('#detail').on('click', function () {
+                let idTable = table.row('.selected').child(1).data();
+                Router.push('/app/purchaceOrder/provider/' + idTable.id)
+
             });
         });
     }, [])
@@ -46,28 +69,23 @@ export default function sales() {
                     </div>
                     <br />
                     <div className="bg-gray-200 mt-3 p-2 w-screen max-w-screen-md m-auto rounded-sm dark:text-gray-800">
+                        <div className="grid grid-cols-12 gap-4 p-2">
+                            <div className="col-span-6 text-right">
+                            </div>
+                            <div className="col-span-2 text-right">
+
+                            </div>
+                            <div className="col-span-2 text-right">
+                            </div>
+                            <div className="col-span-2 text-right mr-1">
+                                <button id="detail" disabled className="bg-blue-500 hover:bg-blue-700 btn btn-sm">Detalhar</button>
+                            </div>
+                        </div>
                         <DataTable id="sales">
                             <tr>
-                                <td>Celular</td>
-                                <td>10/10/2021</td>
-                                <td>1</td>
-                                <td>R$ 900,00</td>
-                                <td><button
-                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    Detalhes
-                                </button></td>
-                            </tr>
-                            <tr>
-                                <td>Caneta</td>
-                                <td>14/10/2021</td>
-                                <td>5</td>
-                                <td>R$ 30,00</td>
-                                <td><button
-                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    Detalhes
-                                </button></td>
+                                <th>Id</th>
+                                <th>Descrição</th>
+                                <th>Data de compra</th>
                             </tr>
                         </DataTable>
                     </div>

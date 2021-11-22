@@ -35,7 +35,7 @@ export default function NavBar(props) {
                     <Link href="/app"><Logo /></Link>
                     <div className="flex-initial px-2 mx-2 lg:flex">
                         <span className="text-lg font-bold">
-                            <Link href="/app">B2B</Link>
+                            <Link href="/app">G&S</Link>
                         </span>
                     </div>
                 </div>

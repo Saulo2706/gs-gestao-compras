@@ -15,9 +15,6 @@ export default function SideBar() {
                         <NavItem href="/app/sales" texto="Vendas" />
                     </li>
                     <li>
-                        <NavItem href="/app/purchaseOrders" texto="Pedidos" />
-                    </li>
-                    <li>
                         <NavItem href="/app/budgetsOrders" texto="Orçamentos" />
                     </li>
                     <li>
