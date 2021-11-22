@@ -13,6 +13,7 @@ import Router from "next/router";
 import api from "../../services/api";
 import { showNotify } from "../../functions/showNotify";
 import { validateResponse } from "../../functions/validateResponse";
+import { parseISOLocal } from "../../functions/parseDate";
 
 export default function budgets() {
 
@@ -22,8 +23,31 @@ export default function budgets() {
                 [
                     { data: "id" },
                     { data: "description" },
-                    { data: "expiresOn" }
-                ], "")
+                    { data: "expiresOn" },
+                    { data: "respondido" },
+                    { data: "budgetResponseIds", visible: false }
+                ], function (src) {
+                    let dst = { draw: 0, recordsTotal: 0, recordsFiltered: 0, data: [] };
+                    dst.draw = 1;
+                    try {
+                        src.forEach(el => {
+                            let date = parseISOLocal(el.expiresOn)
+                            el.expiresOn = ((date.getDate() )) + "/" + ((date.getMonth() + 1)) + "/" + date.getFullYear(); 
+                            if(el.budgetResponseIds.length > 0){
+                                el.respondido = "Sim";
+                            }else{
+                                el.respondido = "Não";
+                            }
+
+                            dst.data.push(el)
+                        });
+                    } catch {
+                        dst.data = []
+                    }
+
+                    console.log(dst.data)
+                    return dst.data;
+                })
 
             $('#budgets tbody').on('click', 'tr', function () {
                 if ($(this).hasClass('selected')) {
@@ -101,6 +125,7 @@ export default function budgets() {
                                     <th>Id</th>
                                     <th>Descrição do Orçamento</th>
                                     <th>Validade do Orçamento</th>
+                                    <th>Respondido</th>
                                 </tr>
                             </thead>
                         </DataTable>
