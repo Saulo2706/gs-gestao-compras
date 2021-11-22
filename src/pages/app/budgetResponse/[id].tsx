@@ -8,7 +8,8 @@ import { useEffect, useState, useContext } from "react";
 import ImageGallery from 'react-image-gallery';
 import { showNotify } from "../../../functions/showNotify";
 import { parseISOLocal } from "../../../functions/parseDate";
-
+import { validateResponse } from "../../../functions/validateResponse";
+import Router from "next/router";
 
 interface iProduct {
     id: number;
@@ -25,9 +26,10 @@ interface iImagesProduct {
 }
 
 interface iItens {
+    forEach: any;
     length: number;
     id: number
-    products: iProduct
+    product: iProduct
     quantity: string
     description: string
 }
@@ -47,20 +49,15 @@ interface iBudget {
 }
 
 
-
 export default function product({ id }) {
     const [budget, setBudget] = useState<iBudget | null>(null);
-    //const [productItem, setProductItem] = useState<iProduct | null>(null);
-    //const [imagesItem, setImagesItem] = useState<iImagesProduct[]>([])
-    const images = [];
 
     useEffect(() => {
         async function loadBudget() {
             try {
-                const { data: budget } = await api.get('api/budget_request/my/company/' + localStorage.getItem('company') + '/budget/' + id)
-                //console.log(budget)
+                const { data: budget } = await api.get('api/budget_request/provider/' + localStorage.getItem('company') + '/budget/' + id)
+                console.log(budget)
                 setBudget(budget)
-                //setImagesItem(productItem.images)
             } catch (error) {
                 console.log(error.response)
             }
@@ -70,13 +67,52 @@ export default function product({ id }) {
 
     }, [])
 
-    function renderImages(id) {
-        return (
-            <img src={process.env.baseURL + '/api/product/image/' + id} alt="" />
-        );
+    function resposeBudget() {
+        const supplier = {
+            id: localStorage.getItem('company')
+        }
+
+        const budgetRequest = {
+            id: id
+        }
+        const itens = []
+
+        budget.itens.forEach(el => {
+            itens.push({ product: { id: el.product.id }, reference: { id: el.product.id }, quantity: el.quantity, unitPrice: (document.getElementById(`price${el.product.id}`) as HTMLInputElement).value })
+        });
+
+        const response = {
+            supplier: supplier,
+            budgetRequest: budgetRequest,
+            itens: itens,
+            expiresOn: (document.getElementById(`expiresOn`) as HTMLInputElement).value + "T00:00:00.000+00:00"
+        }
+
+        console.log(response)
+        api.post('api/budget_response/my', response).then(
+            res => {
+                if (res.status == 200) {
+                    showNotify("Sucesso", "Orçamento respondido com sucesso :)", "success")
+                    localStorage.removeItem('products');
+                    Router.push('../../app/budgetsOrders')
+                } else {
+                    showNotify("Alerta", res.data.message + " Codigo: " + res.status, "warning")
+                }
+            }
+        ).catch((error) => {
+            console.log(error)
+            console.log(error.response)
+            if (error.response) {
+                validateResponse(error.response.data.message)
+            } else {
+                validateResponse("erro não identifiado")
+            }
+        });
+
+
     }
 
-    function render(name, description, qtd, un, descBudget) {
+    function render(name, description, qtd, un, descBudget, price, productId) {
         return (
             <>
                 <div className="grid grid-cols-12 gap-4 p-2">
@@ -93,6 +129,20 @@ export default function product({ id }) {
                         {qtd} / {un}
                     </div>
                     <div className="col-span-2">
+                        <b>Preço / {un}</b>
+                        <input
+                            type="text"
+                            required
+                            placeholder={`Preço / ${un}`}
+                            key={`price${productId}`}
+                            id={`price${productId}`}
+                            name={`price${productId}`}
+                            defaultValue={price}
+                            className={`
+                                px-4 py-3 rounded-lg bg-gray-200 mt-2 
+                                border focus:border-blue-500 focus:bg-white
+                                focus:outline-none
+                            `} />
                     </div>
                 </div>
                 <div className="grid grid-cols-12 gap-4 p-2">
@@ -104,7 +154,6 @@ export default function product({ id }) {
                 <hr></hr>
             </>
         )
-
     }
 
     function renderProduct() {
@@ -112,12 +161,12 @@ export default function product({ id }) {
 
         for (var i = 0; i < budget?.itens.length; i++) {
             products.push(render(budget?.itens[i].product.name, budget?.itens[i].product.description,
-                                 budget?.itens[i].quantity, 
-                                 budget?.itens[i].product.unitMeasure?.name, budget?.itens[i].description ))
+                budget?.itens[i].quantity,
+                budget?.itens[i].product.unitMeasure?.name, budget?.itens[i].description, budget?.itens[i].product.price, budget?.itens[i].product.id))
         }
         let date
 
-        if(budget != undefined){
+        if (budget != undefined) {
             date = parseISOLocal(budget?.expiresOn)
         }
 
@@ -133,8 +182,18 @@ export default function product({ id }) {
                         {budget?.description}
                     </div>
                     <div className="col-span-4">
-                        <b>Expiração: </b> <br />
-                        {((date?.getDate())) + "/" + ((date?.getMonth() + 1)) + "/" + date?.getFullYear()}
+                        <b>Orçamento valido até: </b> <br />
+                        <input
+                            type="date"
+                            required
+                            placeholder="expires"
+                            id="expiresOn"
+                            name="expiresOn"
+                            className={`
+                                px-4 py-3 rounded-lg bg-gray-200 mt-2 
+                                border focus:border-blue-500 focus:bg-white
+                                focus:outline-none`}
+                        />
                     </div>
                 </div>
                 <br />
@@ -143,10 +202,12 @@ export default function product({ id }) {
                     <h2 className="text-center text-3xl font-extrabold">Produtos</h2>
                 </div>
                 <br />
-               {products}
+                {products}
             </>
         )
     }
+
+
 
     return (
         <>
@@ -160,6 +221,10 @@ export default function product({ id }) {
                 <br />
                 <div>
                     {renderProduct()}
+                </div>
+                <br />
+                <div className="flex flex-col items-center justify-center">
+                    <button id="finishCart" onClick={() => resposeBudget()} className="text-center bg-green-500 hover:bg-green-700 btn btn-md">Enviar Resposta de Orçamento</button>
                 </div>
             </Layout>
         </>

@@ -12,13 +12,13 @@ import { validateResponse } from "./validateResponse";
 export function initialJquery() {
     $(document).ready(function () {
         var table2
-        var table = instance("/api/budget_request/provider/" + localStorage.getItem('company'), "GET", "budgetsOrders",
+        var table = instance("/api/budget_request/my/company/" + localStorage.getItem('company'), "GET", "budgets",
             [
                 { data: "id" },
-                { data: "buyer.name" },
                 { data: "description" },
                 { data: "expiresOn" },
                 { data: "respondido" },
+                { data: "budgetResponseIds", visible: false }
             ], function (src) {
                 let dst = { draw: 0, recordsTotal: 0, recordsFiltered: 0, data: [] };
                 dst.draw = 1;
@@ -31,44 +31,64 @@ export function initialJquery() {
                         } else {
                             el.respondido = "Não";
                         }
+
                         dst.data.push(el)
                     });
                 } catch {
                     dst.data = []
-                } console.log(dst.data)
+                }
+
+                console.log(dst.data)
                 return dst.data;
             })
 
-        $('#budgetsOrders tbody').on('click', 'tr', function () {
+        $('#budgets tbody').on('click', 'tr', function () {
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
-                $('#detail').attr("disabled", true);
-                $('#response').attr("disabled", true);
-
+                $('#remove').attr("disabled", true);
+                $('#datail').attr("disabled", true);
             } else {
                 table.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
-                $('#detail').removeAttr('disabled');
+                $('#remove').removeAttr('disabled');
+                $('#datail').removeAttr('disabled');
             }
+        });
 
-            if (table.row('.selected').child(1).data()?.respondido == "Não") {
-                $('#response').removeAttr('disabled');
-            } else {
-                $('#response').attr("disabled", true);
-            }
-
-            $('#response').on('click', function () {
-                let idTable = table.row('.selected').child(1).data();
-                Router.push('/app/budgetResponse/' + idTable.id)
-            });
-
+        $('#datail').on('click', function () {
+            let idBudget = table.row('.selected').child(1).data();
+            //console.log(idBudget.id)
+            Router.push('/app/budget/' + idBudget.id)
 
         });
+
+        $('#remove').on('click', function () {
+            let idBudget = table.row('.selected').child(1).data();
+            api.delete('api/budget_request/my/company/' + localStorage.getItem('company') + '/budget/' + idBudget.id).then(
+                res => {
+                    if (res.status == 200) {
+                        showNotify("Sucesso", "Orçamento cancelado :)", "success")
+                        Router.reload()
+                    } else {
+                        showNotify("Alerta", res.data.message + " Codigo: " + res.status, "warning")
+                    }
+                }
+            ).catch((error) => {
+                console.log(error)
+                console.log(error.response)
+                if (error.response) {
+                    validateResponse(error.response.data.message)
+                } else {
+                    validateResponse("erro não identifiado")
+                }
+            });
+
+        });
+
         $('#idlink2').on('click', function () {
-            table2 = instance("/api/budget_response/my/company/" + localStorage.getItem('company'), "GET", "budgetsResponses",
+            table2 = instance("/api/budget_response/buyer/" + localStorage.getItem('company'), "GET", "budgetsResponses",
                 [
                     { data: "id" },
-                    { data: "solicitante" },
                     { data: "description" },
                     { data: "expiresOn" }
                 ], function (src) {
@@ -100,29 +120,12 @@ export function initialJquery() {
                 }
             });
 
-            $('#delete').on('click', function () {
+            $('#detailResponse').on('click', function () {
                 let idTable = table2.row('.selected').child(1).data();
-                api.delete('api/budget_response/my/company/' + localStorage.getItem('company') + '/budget/' + idTable.id).then(
-                    res => {
-                        if (res.status == 200) {
-                            showNotify("Sucesso", "Resposta cancelada com sucesso :)", "success")
-                            Router.reload()
-                        } else {
-                            showNotify("Alerta", res.data.message + " Codigo: " + res.status, "warning")
-                        }
-                    }
-                ).catch((error) => {
-                    console.log(error)
-                    console.log(error.response)
-                    if (error.response) {
-                        validateResponse(error.response.data.message)
-                    } else {
-                        validateResponse("erro não identifiado")
-                    }
-                });
+                Router.push('/app/budgetResponse/buyer/'+idTable.id)
+                
             });
         });
-
 
     });
 }
@@ -153,7 +156,7 @@ export function Tabs() {
                             href="#link1"
                             role="tablist"
                         >
-                            Recebidos
+                            Solicitados
                         </a>
                     </li>
                     <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -181,26 +184,21 @@ export function Tabs() {
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                 <div className={openTab === 1 ? "block p-2 text-center" : "hidden p-2 text-center"} id="link1">
                     <div className="grid grid-cols-12 gap-4 p-2">
-                        <div className="col-span-6 text-right">
-
+                        <div className="col-span-6">
                         </div>
-                        <div className="col-span-2 text-right">
-
-                        </div>
-                        <div className="col-span-2 text-right">
-                            <button id="response" disabled className="bg-green-500 hover:bg-green-700 btn btn-sm">Responder</button>
+                        <div className="col-span-4 text-right">
+                            <button id="remove" disabled className="bg-red-500 hover:bg-red-700 btn btn-sm">remover</button>
                         </div>
                         <div className="col-span-2 text-right mr-1">
-                            <button id="detail" disabled className="bg-blue-500 hover:bg-blue-700 btn btn-sm">Detalhar</button>
+                            <button id="datail" disabled className="bg-blue-500 hover:bg-blue-700 btn btn-sm">Detalhar</button>
                         </div>
                     </div>
-                    <DataTable id="budgetsOrders">
+                    <DataTable id="budgets">
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Solicitante</th>
                                 <th>Descrição do Orçamento</th>
-                                <th>Data limite para responder</th>
+                                <th>Validade do Orçamento</th>
                                 <th>Respondido</th>
                             </tr>
                         </thead>
@@ -211,7 +209,6 @@ export function Tabs() {
                         <div className="col-span-6">
                         </div>
                         <div className="col-span-2 text-right">
-                            <button id="delete" disabled className="bg-red-500 hover:bg-red-700 btn btn-sm">Cancelar Resposta</button>
                         </div>
                         <div className="col-span-4 text-right mr-1">
                             <button id="detailResponse" disabled className="bg-blue-500 hover:bg-blue-700 btn btn-sm">Detalhar Resposta</button>
@@ -221,7 +218,6 @@ export function Tabs() {
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Solicitante</th>
                                 <th>Descrição do Orçamento</th>
                                 <th>Validade da Resposta</th>
                             </tr>
