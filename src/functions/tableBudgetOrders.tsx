@@ -42,20 +42,17 @@ export function initialJquery() {
         $('#budgetsOrders tbody').on('click', 'tr', function () {
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
-                $('#detail').attr("disabled", true);
-                $('#response').attr("disabled", true);
-
+                //$('#response').attr("disabled", true);
             } else {
                 table.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
-                $('#detail').removeAttr('disabled');
             }
 
-            if (table.row('.selected').child(1).data()?.respondido == "Não") {
+            /*if (table.row('.selected').child(1).data()?.respondido == "Não") {
                 $('#response').removeAttr('disabled');
             } else {
                 $('#response').attr("disabled", true);
-            }
+            }*/
 
             $('#response').on('click', function () {
                 let idTable = table.row('.selected').child(1).data();
@@ -141,8 +138,8 @@ export function Tabs() {
                             className={
                                 "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                                 (openTab === 1
-                                    ? "text-white bg-gray-600"
-                                    : "text-black bg-white")
+                                    ? "text-black bg-white"
+                                    : "text-white bg-gray-600")
                             }
                             onClick={e => {
                                 e.preventDefault();
@@ -161,8 +158,8 @@ export function Tabs() {
                             className={
                                 "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                                 (openTab === 2
-                                    ? "text-white bg-gray-600"
-                                    : "text-black bg-white")
+                                    ? "text-black bg-white"
+                                    : "text-white bg-gray-600")
                             }
                             onClick={e => {
                                 e.preventDefault();
@@ -185,13 +182,11 @@ export function Tabs() {
 
                         </div>
                         <div className="col-span-2 text-right">
-
                         </div>
                         <div className="col-span-2 text-right">
-                            <button id="response" disabled className="bg-green-500 hover:bg-green-700 btn btn-sm">Responder</button>
                         </div>
                         <div className="col-span-2 text-right mr-1">
-                            <button id="detail" disabled className="bg-blue-500 hover:bg-blue-700 btn btn-sm">Detalhar</button>
+                            <button id="response" className="bg-green-500 hover:bg-green-700 btn btn-sm">Responder</button>
                         </div>
                     </div>
                     <DataTable id="budgetsOrders">

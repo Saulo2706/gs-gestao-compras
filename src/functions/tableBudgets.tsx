@@ -96,11 +96,13 @@ export function initialJquery() {
                     dst.draw = 1;
                     try {
                         src.forEach(el => {
-                            let date = parseISOLocal(el.expiresOn)
-                            el.expiresOn = ((date.getDate())) + "/" + ((date.getMonth() + 1)) + "/" + date.getFullYear();
-                            el.solicitante = el.budgetRequest.buyer.name;
-                            el.description = el.budgetRequest.description;
-                            dst.data.push(el)
+                            if (el.buyedAt == undefined) {
+                                let date = parseISOLocal(el.expiresOn)
+                                el.expiresOn = ((date.getDate())) + "/" + ((date.getMonth() + 1)) + "/" + date.getFullYear();
+                                el.solicitante = el.budgetRequest.buyer.name;
+                                el.description = el.budgetRequest.description;
+                                dst.data.push(el)
+                            }
                         });
                     } catch {
                         dst.data = []
@@ -122,8 +124,8 @@ export function initialJquery() {
 
             $('#detailResponse').on('click', function () {
                 let idTable = table2.row('.selected').child(1).data();
-                Router.push('/app/budgetResponse/buyer/'+idTable.id)
-                
+                Router.push('/app/budgetResponse/buyer/' + idTable.id)
+
             });
         });
 
@@ -144,8 +146,8 @@ export function Tabs() {
                             className={
                                 "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                                 (openTab === 1
-                                    ? "text-white bg-gray-600"
-                                    : "text-black bg-white")
+                                    ? "text-black bg-white"
+                                    : "text-white bg-gray-600")
                             }
                             onClick={e => {
                                 e.preventDefault();
@@ -164,8 +166,8 @@ export function Tabs() {
                             className={
                                 "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                                 (openTab === 2
-                                    ? "text-white bg-gray-600"
-                                    : "text-black bg-white")
+                                    ? "text-black bg-white"
+                                    : "text-white bg-gray-600")
                             }
                             onClick={e => {
                                 e.preventDefault();
@@ -176,7 +178,7 @@ export function Tabs() {
                             href="#link2"
                             role="tablist"
                         >
-                            Respondidos
+                            Recebidos
                         </a>
                     </li>
                 </ul>

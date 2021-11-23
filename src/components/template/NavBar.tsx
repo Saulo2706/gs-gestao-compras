@@ -10,6 +10,7 @@ import 'jquery/dist/jquery.min.js';
 import ButtonAlterTheme from "./ButtonAlterTheme";
 import ButtonAlterMode from "./ButtonAlterMode";
 import ButtonAlterCompany from "./ButtonAlterCompany";
+import ButtonCart from "./ButtonCart";
 
 interface ICompanyes {
     createdAt: string;
@@ -43,13 +44,7 @@ export default function NavBar(props) {
                     <ButtonAlterMode mode={mode} alterMode={alterMode} />
                     <ButtonAlterTheme theme={theme} alterTheme={alterTheme} />
                     <ButtonAlterCompany />
-                    <div className={`
-                        flex items-center justify-center  cursor-pointer
-                        bg-black text-yellow-300 w-6 h-6 rounded-full
-                        ml-2
-                    `}>
-                        <a href="/app/cart">{IconCart(5)}</a>
-                    </div>
+                    <ButtonCart/>
                     <AvatarUser className="ml-4 mr-4" />
                 </div>
             </div >

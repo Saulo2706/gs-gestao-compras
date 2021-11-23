@@ -6,6 +6,7 @@ import api from '../../../services/api';
 import {useEffect, useState, useContext } from "react";
 import ImageGallery from 'react-image-gallery';
 import { showNotify } from "../../../functions/showNotify";
+import Router from "next/router";
 
 
 interface iProduct {
@@ -66,6 +67,7 @@ export default function product({ id }) {
             products.push({ 'id': id, 'qtd': qtd, 'obs': obs});
             localStorage.setItem('products', JSON.stringify(products));
             showNotify("Sucesso", "Item adicionado no carrinho com sucesso :)", "success")
+            Router.push('/app/cart')
         }else{
             showNotify("Erro", "Quantidade não informada", "danger")
         }

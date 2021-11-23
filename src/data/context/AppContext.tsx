@@ -30,10 +30,9 @@ export function AppProvider(props){
         const newMode = mode === '' ? 'provider' : ''
         setMode(newMode)
         localStorage.setItem('mode',newMode)
-
-        if (Router.pathname == "/app/products" || Router.pathname == "/app/productManagement" || Router.pathname == "/app/budgets" || Router.pathname == "/app/purchases" || Router.pathname == "/app/budgetsOrders" || Router.pathname == "/app/sales") {
+        //if (Router.pathname == "/app/products" || Router.pathname == "/app/productManagement" || Router.pathname == "/app/budgets" || Router.pathname == "/app/purchases" || Router.pathname == "/app/budgetsOrders" || Router.pathname == "/app/sales") {
             Router.push("/app")
-        }
+        //}
     }
 
     useEffect(() =>{
